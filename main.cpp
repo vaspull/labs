@@ -12,36 +12,17 @@ int ex1_2()
     printf("\n");
     printf("Hello, World!\b");
     printf("\n");
-    //printf("\nHello, World!\c"); \с - не работает
-    //printf("\nHello, World!\d"); \d - не работает
-    //printf("Hello, World!\e");
     printf("\n");
     printf("Hello, World!\f");
     printf("\n");
-    //printf("Hello, World!\g"); \g - не работает
-    //    printf("Hello, World!\h"); \h - не работает
-    //    printf("Hello, World!\i"); \i - не работает
-    //    printf("Hello, World!\j"); \j - не работает
-    //    printf("Hello, World!\k"); \k - не работает
-    //    printf("Hello, World!\l"); \l - не работает
-    //    printf("Hello, World!\m"); \m - не работает
     printf("Hello, World!\n");
     printf("\n");
-    //    printf("Hello, World!\o"); \o - не работает
-    //    printf("Hello, World!\p"); \p - не работает
-    //    printf("Hello, World!\q"); \q - не работает
     printf("Hello, World!\r");
     printf("\n");
-    //    printf("Hello, World!\s"); \s - не работает
     printf("Hello, World!\t");
     printf("\n");
-    //    printf("Hello, World!\u"); \u - universal char name
     printf("Hello, World!\v");
     printf("\n");
-    //    printf("Hello, World!\w"); \w - не работает
-    //    printf("Hello, World!\x"); \x - for hex digit
-    //    printf("Hello, World!\y"); \y - не работает
-    //    printf("Hello, World!\z"); \z - не работает
     return(0);
 }
 
