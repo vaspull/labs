@@ -1,51 +1,51 @@
 #include <stdio.h>
 
-int ex1()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.1
+int ex1()//упражнение 1.1
 {
     printf("Hello, World!\n");
     return(0);
 }
 
-int ex2()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.2
+int ex2()//упражнение 1.2
 {
     printf("Hello, World!\a");
     printf("\n");
     printf("Hello, World!\b");
     printf("\n");
-    //printf("\nHello, World!\c"); \СЃ - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //printf("\nHello, World!\d"); \d - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    printf("Hello, World!\e");
+    //printf("\nHello, World!\c"); \с - не работает
+    //printf("\nHello, World!\d"); \d - не работает
+    //printf("Hello, World!\e");
     printf("\n");
     printf("Hello, World!\f");
     printf("\n");
-    //printf("Hello, World!\g"); \g - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\h"); \h - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\i"); \i - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\j"); \j - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\k"); \k - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\l"); \l - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\m"); \m - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
+    //printf("Hello, World!\g"); \g - не работает
+    //    printf("Hello, World!\h"); \h - не работает
+    //    printf("Hello, World!\i"); \i - не работает
+    //    printf("Hello, World!\j"); \j - не работает
+    //    printf("Hello, World!\k"); \k - не работает
+    //    printf("Hello, World!\l"); \l - не работает
+    //    printf("Hello, World!\m"); \m - не работает
     printf("Hello, World!\n");
     printf("\n");
-    //    printf("Hello, World!\o"); \o - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\p"); \p - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\q"); \q - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
+    //    printf("Hello, World!\o"); \o - не работает
+    //    printf("Hello, World!\p"); \p - не работает
+    //    printf("Hello, World!\q"); \q - не работает
     printf("Hello, World!\r");
     printf("\n");
-    //    printf("Hello, World!\s"); \s - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
+    //    printf("Hello, World!\s"); \s - не работает
     printf("Hello, World!\t");
     printf("\n");
     //    printf("Hello, World!\u"); \u - universal char name
     printf("Hello, World!\v");
     printf("\n");
-    //    printf("Hello, World!\w"); \w - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
+    //    printf("Hello, World!\w"); \w - не работает
     //    printf("Hello, World!\x"); \x - for hex digit
-    //    printf("Hello, World!\y"); \y - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-    //    printf("Hello, World!\z"); \z - РЅРµ СЂР°Р±РѕС‚Р°РµС‚
+    //    printf("Hello, World!\y"); \y - не работает
+    //    printf("Hello, World!\z"); \z - не работает
     return(0);
 }
 
-int ex3()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.3
+int ex3()//упражнение 1.3
 {
     printf ("Transfer Program Fahrenheit to Celsius\n\n");
     float fahr, celsius;
@@ -64,7 +64,7 @@ int ex3()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.3
     return(0);
 }
 
-int ex4()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.4
+int ex4()//упражнение 1.4
 {
     printf ("Transfer Program Celsius to Fahrenheit\n\n");
     float fahr, celsius;
@@ -82,7 +82,7 @@ int ex4()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.4
     return(0);
 }
 
-int ex5()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.5
+int ex5()//упражнение 1.5
 {
     int fahr;
     for (fahr = 300; fahr >= 0; fahr = fahr - 20)
@@ -90,7 +90,7 @@ int ex5()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.5
     return(0);
 }
 
-int ex6()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.6
+int ex6()//упражнение 1.6
 {
     int c;
     while ( c == 0 )
@@ -101,7 +101,7 @@ int ex6()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.6
     return(0);
 }
 
-int ex7()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.7
+int ex7()//упражнение 1.7
 {
     int b;
     b = EOF;
@@ -109,7 +109,7 @@ int ex7()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.7
     return(0);
 }
 
-int ex8()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.8, РІРјРµСЃС‚Рѕ EOF РїРѕСЃС‚Р°РІРёР» '0' С‚.Рє. Сѓ РјРµРЅСЏ EOF РІРµРґРµС‚ СЃРµР±СЏ РЅРµР°РґРµРєРІР°С‚РЅРѕ...
+int ex8()//упражнение 1.8, вместо EOF поставил '0' т.к. у меня EOF ведет себя неадекватно...
 {
     int c;
     int space = 0;
@@ -133,7 +133,7 @@ int ex8()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.8, РІРјРµСЃС‚Рѕ EOF РїРѕСЃС‚Р°РІРёР» '0' С‚.Рє
     return(0);
 }
 
-int ex9()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.9, Р·Р°РјРµРЅР° РЅРµСЃРєРѕР»СЊРєРёС… СЃРїРµСЃРѕРІ РѕРґРЅРёРј
+int ex9()//упражнение 1.9, замена нескольких спесов одним
 {
     int c;
     int space = 0;
@@ -154,7 +154,7 @@ int ex9()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.9, Р·Р°РјРµРЅР° РЅРµСЃРєРѕР»СЊРєРёС… СЃРїРµСЃР
     return(0);
 }
 
-int ex10()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.10
+int ex10()//упражнение 1.10
 {
     int c;
     while (c != EOF)
@@ -186,7 +186,7 @@ int ex10()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.10
 #define NADO 2
 #define NENADO 3
 
-int ex11 ()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.12
+int ex11 ()//упражнение 1.12
 {
     int c = 1;
     int state;
@@ -217,7 +217,7 @@ int ex11 ()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.12
     return(0);
 }
 
-int ex12()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.13
+int ex12()//упражнение 1.13
 {
     int wlen = 0;
     char c;
@@ -237,7 +237,7 @@ int ex12()//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.13
     return 0;
 }
 
-//СѓРїСЂР°Р¶РЅРµРЅРёРµ 1.15
+//упражнение 1.15
 
 float celfahr(float cel)
 {
@@ -288,7 +288,7 @@ void copy(char to[], char from[])
         ++i;
 }
 
-ex14()
+int ex14()
 {
     int len;
     int max;
@@ -309,7 +309,7 @@ ex14()
 
 //1.17
 
-ex15()
+int ex15()
 {
     int len;
     char line[MAXLINE];
@@ -329,7 +329,8 @@ int ex16()
     return(0);
 }
 
-main()
+int main()
 {
     ex15();
+    return(0);
 }
