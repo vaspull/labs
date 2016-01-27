@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-int ex1()//упражнение 1.1
+int ex1_1()
 {
     printf("Hello, World!\n");
     return(0);
 }
 
-int ex2()//упражнение 1.2
+int ex1_2()
 {
     printf("Hello, World!\a");
     printf("\n");
@@ -45,7 +45,7 @@ int ex2()//упражнение 1.2
     return(0);
 }
 
-int ex3()//упражнение 1.3
+int ex1_3()
 {
     printf ("Transfer Program Fahrenheit to Celsius\n\n");
     float fahr, celsius;
@@ -64,7 +64,7 @@ int ex3()//упражнение 1.3
     return(0);
 }
 
-int ex4()//упражнение 1.4
+int ex1_4()
 {
     printf ("Transfer Program Celsius to Fahrenheit\n\n");
     float fahr, celsius;
@@ -82,7 +82,7 @@ int ex4()//упражнение 1.4
     return(0);
 }
 
-int ex5()//упражнение 1.5
+int ex1_5()
 {
     int fahr;
     for (fahr = 300; fahr >= 0; fahr = fahr - 20)
@@ -90,7 +90,7 @@ int ex5()//упражнение 1.5
     return(0);
 }
 
-int ex6()//упражнение 1.6
+int ex1_6()
 {
     int c;
     while ( c == 0 )
@@ -101,7 +101,7 @@ int ex6()//упражнение 1.6
     return(0);
 }
 
-int ex7()//упражнение 1.7
+int ex1_7()
 {
     int b;
     b = EOF;
@@ -109,7 +109,7 @@ int ex7()//упражнение 1.7
     return(0);
 }
 
-int ex8()//упражнение 1.8, вместо EOF поставил '0' т.к. у меня EOF ведет себя неадекватно...
+int ex1_8()
 {
     int c;
     int space = 0;
@@ -133,7 +133,7 @@ int ex8()//упражнение 1.8, вместо EOF поставил '0' т.к. у меня EOF ведет себя не
     return(0);
 }
 
-int ex9()//упражнение 1.9, замена нескольких спесов одним
+int ex1_9()
 {
     int c;
     int space = 0;
@@ -154,7 +154,7 @@ int ex9()//упражнение 1.9, замена нескольких спесов одним
     return(0);
 }
 
-int ex10()//упражнение 1.10
+int ex1_10()
 {
     int c;
     while (c != EOF)
@@ -186,7 +186,7 @@ int ex10()//упражнение 1.10
 #define NADO 2
 #define NENADO 3
 
-int ex11 ()//упражнение 1.12
+int ex1_12()
 {
     int c = 1;
     int state;
@@ -217,7 +217,7 @@ int ex11 ()//упражнение 1.12
     return(0);
 }
 
-int ex12()//упражнение 1.13
+int ex1_13()
 {
     int wlen = 0;
     char c;
@@ -237,7 +237,7 @@ int ex12()//упражнение 1.13
     return 0;
 }
 
-//упражнение 1.15
+
 
 float celfahr(float cel)
 {
@@ -245,7 +245,7 @@ float celfahr(float cel)
     return fahr;
 }
 
-int ex13()
+int ex1_15()
 {
     printf ("Transfer Program Celsius to Fahrenheit\n\n");
     float fahr, celsius;
@@ -263,7 +263,7 @@ int ex13()
     return(0);
 }
 
-//1.16
+
 
 #define MAXLINE 1000
 int getline(char s[], int lim)
@@ -288,7 +288,7 @@ void copy(char to[], char from[])
         ++i;
 }
 
-int ex14()
+int ex1_16()
 {
     int len;
     int max;
@@ -307,9 +307,9 @@ int ex14()
     return 0;
 }
 
-//1.17
 
-int ex15()
+
+int ex1_17()
 {
     int len;
     char line[MAXLINE];
@@ -322,15 +322,15 @@ int ex15()
     return 0;
 }
 
-//1.18
 
-int ex16()
+
+int ex1_18()
 {
     return(0);
 }
 
 int main()
 {
-    ex15();
+    ex1_1();
     return(0);
 }
