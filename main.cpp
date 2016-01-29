@@ -1,31 +1,5 @@
 #include <stdio.h>
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
-#define windows
 #define MAXLINE 3000
-int cls()  //crossplatform clear screen
-{
-    int r;
-#ifdef windows
-    r = system("cls");
-#else
-    r = system("clear");
-#endif
-    return r;
-}
-int greeting()
-{
-    cout << "Welcome to the demonstration of the exercises " << endl;
-    cout << "from the book by Brian Kernighan and Dennis Ritchie" << endl;
-    cout << "<--------C ++ Programming Language-------->" << endl;
-#ifdef windows
-    cout << "Build mode - Windows.\n" << endl;
-#else
-    cout << "build mode - Linux.\n" << endl;
-#endif
-    return(0);
-}
 int getline(char s[], int lim)
 {
     int c = 1;
@@ -42,13 +16,11 @@ int getline(char s[], int lim)
 }
 int ex1_1()
 {
-    cls();
     printf("Hello, World!\n");
     return(0);
 }
 int ex1_2()
 {
-    cls();
     printf("Hello, World!\a");
     printf("\n");
     printf("Hello, World!\b");
@@ -545,160 +517,5 @@ int ex1_22()
 int main()
 {
     ex1_22();
-    return(0);
-}
-
-
-
-int main_future_idea()
-{
-re: cls();
-    greeting();
-    cout << "Choose exercise\n\n";
-    cout << " 1. Exercise 1.1" << "     12. Exercise 1.12\n";
-    cout << " 2. Exercise 1.2" << "     13. Exercise 1.13\n";
-    cout << " 3. Exercise 1.3" << "     14. Exercise 1.14\n";
-    cout << " 4. Exercise 1.4" << "     15. Exercise 1.15\n";
-    cout << " 5. Exercise 1.5" << "     16. Exercise 1.16\n";
-    cout << " 6. Exercise 1.6" << "     17. Exercise 1.17\n";
-    cout << " 7. Exercise 1.7" << "     18. Exercise 1.18\n";
-    cout << " 8. Exercise 1.8" << "     19. Exercise 1.19\n";
-    cout << " 9. Exercise 1.9" << "     20. Exercise 1.20\n";
-    cout << "10. Exercise 1.10" << "    21. Exercise 1.21\n\n";
-    cout << "11. Exit\n";
-    cout << "Selection: ";
-
-    char ch = 'q';
-    string str;
-    int g;
-    getline ( cin , str );
-    int strlength = str.length();
-    for ( int t = 0 ; t < strlength; t++ )
-    {
-        ch = str.c_str()[t];
-    }
-    if ( !isdigit(ch) )
-    {
-        cerr << "Invalid value, press Enter to try again\n";
-        cin.get();
-        goto re;
-    }
-    g = atoi( str.c_str() );
-
-    switch ( g )
-    {
-    case 1:
-        ex1_1();
-        cin.get();
-        goto re;
-        break;
-    case 2:
-        ex1_2();
-        cin.get();
-        goto re;
-        break;
-    case 3:
-        ex1_3();
-        cin.get();
-        goto re;
-        break;
-    case 4:
-        ex1_4();
-        cin.get();
-        goto re;
-        break;
-    case 5:
-        ex1_5();
-        cin.get();
-        goto re;
-        break;
-    case 6:
-        ex1_6();
-        cin.get();
-        goto re;
-        break;
-    case 7:
-        ex1_7();
-        cin.get();
-        goto re;
-        break;
-    case 8:
-        ex1_8();
-        cin.get();
-        goto re;
-        break;
-    case 9:
-        ex1_9();
-        cin.get();
-        goto re;
-        break;
-    case 10:
-        ex1_10();
-        cin.get();
-        goto re;
-        break;
-    case 11:
-        ex1_12();
-        cin.get();
-        goto re;
-        break;
-    case 12:
-        ex1_13();
-        cin.get();
-        goto re;
-        break;
-    case 13:
-        ex1_14();
-        cin.get();
-        goto re;
-        break;
-    case 14:
-        ex1_15();
-        cin.get();
-        goto re;
-        break;
-    case 15:
-        ex1_16();
-        cin.get();
-        goto re;
-        break;
-    case 16:
-        ex1_17();
-        cin.get();
-        goto re;
-        break;
-    case 17:
-        ex1_18();
-        cin.get();
-        goto re;
-        break;
-    case 18:
-        ex1_19();
-        cin.get();
-        goto re;
-        break;
-    case 19:
-        ex1_20();
-        cin.get();
-        goto re;
-        break;
-    case 20:
-        ex1_21();
-        cin.get();
-        goto re;
-        break;
-    case 21:
-        ex1_22();
-        cin.get();
-        goto re;
-        break;
-    case 99:
-        cout << "\nThe End." << endl;
-        return(0);
-    default:
-        cerr << "Invalid value, press Enter to try again\n";
-        cin.get();
-        goto re;
-    }
     return(0);
 }
