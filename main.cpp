@@ -51,7 +51,6 @@ int ex1_3()
         printf ("%3.0f %6.1f\n", fahr, celsius);
         fahr = fahr + step;
     }
-
     return(0);
 }
 int ex1_4()
@@ -230,7 +229,6 @@ int ex1_14()
     {
         char e[100];
         for ( int i = 0 ; i > 100 ; i++ ) e[i] = 0;
-        //long d = 0;
         long j = 0;
         char b;
         long o = 0;
@@ -280,7 +278,6 @@ int ex1_14()
         }
     }
     return(0);
-
 }
 int ex1_15()
 {
@@ -445,7 +442,7 @@ int ex1_20()
     {
         detab(B,A);
         printf("%s\n" , B);
-     }
+    }
     return(0);
 }
 void entab(char to[], char from[])
@@ -484,7 +481,7 @@ int ex1_21()
     {
         entab(B,A);
         printf("%s\n" , B);
-     }
+    }
     return(0);
 }
 int get_fix_line(char s[], int lim)
@@ -514,8 +511,68 @@ int ex1_22()
     }
     return 0;
 }
+void ex1_23()
+{
+    int flag = 0;
+    int flag2 = 0;
+    int flag3 = 0;
+    char c;
+    const char *fname = "main.cpp";
+    FILE* file = fopen(fname, "r");
+    if(file == NULL)
+    {
+        printf("File does not exist.\n");
+    }
+    else
+    {
+        while ( ( c = getc(file) ) != EOF )
+        {
+            if ( c == '/' )
+            {
+                if (flag3 == 1)
+                {
+                    flag3 = 0;
+                }
+                else
+                {
+                    flag = 1;
+                    flag2 = 1;
+                }
+            }
+
+            else if ( c == '\n' )
+            {
+                flag = 0;
+                printf( "%c" , c );
+            }
+            else if ( c == '*' )
+            {
+                if ( flag2 == 1 )
+                {
+                    flag3 = 1;
+                    flag2 = 0;
+                }
+                else if ( flag3 == 1)
+                {
+                   // flag2 = 0;
+                }
+                else
+                {
+                    printf("%c", c);
+                }
+            }
+
+            else if ( flag == 0  && flag3 == 0 )//&& flag2 == 0 )
+            {
+                printf("%c", c);
+            }
+        }
+        fclose(file);
+    }
+}
+
 int main()
 {
-    ex1_22();
+    ex1_23();
     return(0);
 }
