@@ -1,5 +1,7 @@
 #include <stdio.h>
+
 #define MAXLINE 3000
+
 int getline(char s[], int lim)
 {
     int c = 1;
@@ -14,29 +16,24 @@ int getline(char s[], int lim)
     s[i] = '\0';
     return i;
 }
-int ex1_1()
+
+void ex1_1()
 {
     printf("Hello, World!\n");
-    return(0);
 }
-int ex1_2()
+
+void ex1_2()
 {
-    printf("Hello, World!\a");
-    printf("\n");
-    printf("Hello, World!\b");
-    printf("\n");
-    printf("Hello, World!\f");
-    printf("\n");
-    printf("Hello, World!\n");
-    printf("Hello, World!\r");
-    printf("\n");
-    printf("Hello, World!\t");
-    printf("\n");
-    printf("Hello, World!\v");
-    printf("\n");
-    return(0);
+    printf("Hello, World!\a\n");
+    printf("Hello, World!\b\n");
+    printf("Hello, World!\f\n");
+    printf("Hello, World!\n\n");
+    printf("Hello, World!\r\n");
+    printf("Hello, World!\t\n");
+    printf("Hello, World!\v\n");
 }
-int ex1_3()
+
+void ex1_3()
 {
     printf ("Transfer Program Fahrenheit to Celsius\n\n");
     float fahr, celsius;
@@ -51,9 +48,9 @@ int ex1_3()
         printf ("%3.0f %6.1f\n", fahr, celsius);
         fahr = fahr + step;
     }
-    return(0);
 }
-int ex1_4()
+
+void ex1_4()
 {
     printf ("Transfer Program Celsius to Fahrenheit\n\n");
     float fahr, celsius;
@@ -68,33 +65,34 @@ int ex1_4()
         printf("%7.2f %7.2f\n", celsius, fahr);
         celsius = celsius + step;
     }
-    return(0);
 }
-int ex1_5()
+
+void ex1_5()
 {
-    int fahr;
-    for (fahr = 300; fahr >= 0; fahr = fahr - 20)
-        printf ("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
-    return(0);
+    printf("Celsius:\tFahrenheit:\n");
+    for (int fahr = 300; fahr >= 0; fahr = fahr - 20)
+        printf ("%3d\t\t%5.1f\n", fahr, (5.0/9.0)*(fahr-32));
 }
-int ex1_6()
+
+void ex1_6()
 {
     int c;
-    while ( c == 0 )
+    printf("Press keys to evaluate expression '(getchar() == EOF)'.\n");
+    while ( c == 0)
     {
         c = ( getchar() == EOF );
         printf("%d\n", c);
     }
-    return(0);
 }
-int ex1_7()
+
+void ex1_7()
 {
     int b;
     b = EOF;
-    printf("%d", b);
-    return(0);
+    printf("EOF = %d", b);
 }
-int ex1_8()
+
+void ex1_8()
 {
     int c;
     int space = 0;
@@ -115,8 +113,8 @@ int ex1_8()
     printf("%d\n", tab);
     printf("Newline: ");
     printf("%d\n", newline);
-    return(0);
 }
+
 int ex1_9()
 {
     int c;
@@ -137,6 +135,7 @@ int ex1_9()
     }
     return(0);
 }
+
 int ex1_10()
 {
     int c;
@@ -163,10 +162,12 @@ int ex1_10()
     }
     return(0);
 }
+
 #define IN 1
 #define OUT 0
 #define NADO 2
 #define NENADO 3
+
 int ex1_12()
 {
     int c = 1;
@@ -197,6 +198,7 @@ int ex1_12()
     }
     return(0);
 }
+
 int ex1_13()
 {
     int wlen = 0;
@@ -216,11 +218,13 @@ int ex1_13()
     }
     return 0;
 }
+
 float celfahr(float cel)
 {
     float fahr = (9.0/5.0) * cel + 32;
     return fahr;
 }
+
 int ex1_14()
 {
     char A[MAXLINE];
@@ -279,6 +283,7 @@ int ex1_14()
     }
     return(0);
 }
+
 int ex1_15()
 {
     printf ("Transfer Program Celsius to Fahrenheit\n\n");
@@ -296,6 +301,7 @@ int ex1_15()
     }
     return(0);
 }
+
 void copy(char to[], char from[])
 {
     int i;
@@ -303,6 +309,7 @@ void copy(char to[], char from[])
     while ((to[i] = from[i]) != '\0')
         ++i;
 }
+
 int ex1_16()
 {
     int len;
@@ -321,6 +328,7 @@ int ex1_16()
     printf("%d",max);
     return 0;
 }
+
 int ex1_17()
 {
     int len;
@@ -333,6 +341,7 @@ int ex1_17()
         }
     return 0;
 }
+
 int del_space(char to[], char from[])
 {
     int c;
@@ -366,6 +375,7 @@ int del_space(char to[], char from[])
     to[j] = '\0';
     return j;
 }
+
 int ex1_18()
 {
     int len;
@@ -379,6 +389,7 @@ int ex1_18()
     }
     return 0;
 }
+
 void reverse(char to[], char from[])
 {
     int c = 0;
@@ -392,6 +403,7 @@ void reverse(char to[], char from[])
         d++;
     }
 }
+
 int ex1_19()
 {
     char A[MAXLINE];
@@ -406,6 +418,7 @@ int ex1_19()
     }
     return(0);
 }
+
 void detab(char to[], char from[])
 {
     int tab = 4;
@@ -431,6 +444,7 @@ void detab(char to[], char from[])
     }
     to[j] = '\0';
 }
+
 int ex1_20()
 {
     char A[MAXLINE];
@@ -445,6 +459,7 @@ int ex1_20()
     }
     return(0);
 }
+
 void entab(char to[], char from[])
 {
     int tab = 1;
@@ -470,6 +485,7 @@ void entab(char to[], char from[])
     }
     to[j] = '\0';
 }
+
 int ex1_21()
 {
     char A[MAXLINE];
@@ -484,6 +500,7 @@ int ex1_21()
     }
     return(0);
 }
+
 int get_fix_line(char s[], int lim)
 {
     int c;
@@ -500,6 +517,7 @@ int get_fix_line(char s[], int lim)
     s[i] = '\0';
     return i;
 }
+
 int ex1_22()
 {
     int length;
@@ -511,6 +529,7 @@ int ex1_22()
     }
     return 0;
 }
+
 void ex1_23()
 {
     int flag = 0;
@@ -573,6 +592,6 @@ void ex1_23()
 
 int main()
 {
-    ex1_23();
+    ex1_6();
     return(0);
 }
