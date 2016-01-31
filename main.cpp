@@ -77,7 +77,7 @@ void ex1_5()
 void ex1_6()
 {
     int c;
-    printf("Press keys to evaluate expression '(getchar() == EOF)'.\n");
+    printf("Press Ctrl+D or other keys to evaluate expression '(getchar() == EOF)'.\n");
     while ( c == 0)
     {
         c = ( getchar() == EOF );
@@ -89,7 +89,7 @@ void ex1_7()
 {
     int b;
     b = EOF;
-    printf("EOF = %d", b);
+    printf("EOF = %d\n", b);
 }
 
 void ex1_8()
@@ -97,25 +97,22 @@ void ex1_8()
     int c;
     int space = 0;
     int tab = 0;
-    int newline = 0;
-    while ((c = getchar()) != '0')
+    int newLine = 0;
+    while ((c = getchar()) != EOF)
     {
         if (c == '\n')
-            ++newline;
+            ++newLine;
         else if (c == '\t')
             ++tab;
         else if (c == ' ')
             ++space;
     }
-    printf("Space: ");
-    printf("%d\n", space);
-    printf("Tab: ");
-    printf("%d\n", tab);
-    printf("Newline: ");
-    printf("%d\n", newline);
+    printf("Spaces: %d\n", space);
+    printf("Tabs: %d\n", tab);
+    printf("Newlines: %d\n", newLine);
 }
 
-int ex1_9()
+void ex1_9()
 {
     int c;
     int space = 0;
@@ -133,10 +130,9 @@ int ex1_9()
             space = 1;
         }
     }
-    return(0);
 }
 
-int ex1_10()
+void ex1_10()
 {
     int c;
     while (c != EOF)
@@ -144,23 +140,22 @@ int ex1_10()
         c = getchar();
         if (c == '\t')
         {
-            printf("%c", 92 );
-            printf("%c", 116 );
+            putchar(92);
+            putchar(116);
         }
         else if (c == '\b')
         {
-            printf("%c", 92);
-            printf("%c", 98);
+            putchar(92);
+            putchar(98);
         }
-        else if ( c == 92 )
+        else if ( c == '\\' )
         {
-            printf("%c", 92);
-            printf("%c", 92);
+            putchar(92);
+            putchar(92);
         }
         else
             putchar(c);
     }
-    return(0);
 }
 
 #define IN 1
@@ -168,7 +163,7 @@ int ex1_10()
 #define NADO 2
 #define NENADO 3
 
-int ex1_12()
+void ex1_12()
 {
     int c = 1;
     int state;
@@ -187,7 +182,6 @@ int ex1_12()
         {
             putchar('\n');
         }
-
         else if ( state == OUT )
         {
             state = IN;
@@ -196,10 +190,9 @@ int ex1_12()
         else
             putchar(c);
     }
-    return(0);
 }
 
-int ex1_13()
+void ex1_13()
 {
     int wlen = 0;
     char c;
@@ -216,16 +209,9 @@ int ex1_13()
             wlen = 0;
         }
     }
-    return 0;
 }
 
-float celfahr(float cel)
-{
-    float fahr = (9.0/5.0) * cel + 32;
-    return fahr;
-}
-
-int ex1_14()
+void ex1_14()
 {
     char A[MAXLINE];
     int length = 0;
@@ -281,10 +267,15 @@ int ex1_14()
             counter = 0;
         }
     }
-    return(0);
 }
 
-int ex1_15()
+float celfahr(float cel)
+{
+    float fahr = (9.0/5.0) * cel + 32;
+    return fahr;
+}
+
+void ex1_15()
 {
     printf ("Transfer Program Celsius to Fahrenheit\n\n");
     float fahr, celsius;
@@ -299,7 +290,6 @@ int ex1_15()
         printf("%7.2f %7.2f\n", celsius, fahr);
         celsius = celsius + step;
     }
-    return(0);
 }
 
 void copy(char to[], char from[])
@@ -310,7 +300,7 @@ void copy(char to[], char from[])
         ++i;
 }
 
-int ex1_16()
+void ex1_16()
 {
     int len;
     int max;
@@ -324,22 +314,18 @@ int ex1_16()
         }
     if (max > 0)
         printf("%s\n", longest);
-    printf("The legth of the longest string: ");
-    printf("%d",max);
-    return 0;
+    printf("The legth of the longest string: %d\n", max);
 }
 
-int ex1_17()
+void ex1_17()
 {
     int len;
     char line[MAXLINE];
     while ((len = getline(line, MAXLINE)) != EOF)
         if (len > 80) {
             printf("%s\n", line);
-            printf("The legth of the string: ");
-            printf("%d\n\n",len);
+            printf("The legth of the string: %d\n\n", len);
         }
-    return 0;
 }
 
 int del_space(char to[], char from[])
@@ -376,7 +362,7 @@ int del_space(char to[], char from[])
     return j;
 }
 
-int ex1_18()
+void ex1_18()
 {
     int len;
     char line[1000];
@@ -387,7 +373,6 @@ int ex1_18()
         del_space(newline, line);
         printf("%s" , newline);
     }
-    return 0;
 }
 
 void reverse(char to[], char from[])
@@ -404,7 +389,7 @@ void reverse(char to[], char from[])
     }
 }
 
-int ex1_19()
+void ex1_19()
 {
     char A[MAXLINE];
     for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
@@ -416,7 +401,6 @@ int ex1_19()
         reverse(B,A);
         printf("%s\n" , B);
     }
-    return(0);
 }
 
 void detab(char to[], char from[])
@@ -445,7 +429,7 @@ void detab(char to[], char from[])
     to[j] = '\0';
 }
 
-int ex1_20()
+void ex1_20()
 {
     char A[MAXLINE];
     for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
@@ -457,7 +441,6 @@ int ex1_20()
         detab(B,A);
         printf("%s\n" , B);
     }
-    return(0);
 }
 
 void entab(char to[], char from[])
@@ -486,7 +469,7 @@ void entab(char to[], char from[])
     to[j] = '\0';
 }
 
-int ex1_21()
+void ex1_21()
 {
     char A[MAXLINE];
     for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
@@ -498,7 +481,6 @@ int ex1_21()
         entab(B,A);
         printf("%s\n" , B);
     }
-    return(0);
 }
 
 int get_fix_line(char s[], int lim)
@@ -518,7 +500,7 @@ int get_fix_line(char s[], int lim)
     return i;
 }
 
-int ex1_22()
+void ex1_22()
 {
     int length;
     char line[20];
@@ -527,7 +509,6 @@ int ex1_22()
     {
         printf("%s\n", line);
     }
-    return 0;
 }
 
 void ex1_23()
@@ -540,58 +521,57 @@ void ex1_23()
     FILE* file = fopen(fname, "r");
     if(file == NULL)
     {
-        printf("File does not exist.\n");
+        printf("File '%s' does not exist.\n", fname);
+        return;
     }
-    else
+    while ( ( c = getc(file) ) != EOF )
     {
-        while ( ( c = getc(file) ) != EOF )
+        if ( c == '/' )
         {
-            if ( c == '/' )
+            if (flag3 == 1)
             {
-                if (flag3 == 1)
-                {
-                    flag3 = 0;
-                }
-                else
-                {
-                    flag = 1;
-                    flag2 = 1;
-                }
+                flag3 = 0;
             }
+            else
+            {
+                flag = 1;
+                flag2 = 1;
+            }
+        }
 
-            else if ( c == '\n' )
+        else if ( c == '\n' )
+        {
+            flag = 0;
+            printf( "%c" , c );
+        }
+        else if ( c == '*' )
+        {
+            if ( flag2 == 1 )
             {
-                flag = 0;
-                printf( "%c" , c );
+                flag3 = 1;
+                flag2 = 0;
             }
-            else if ( c == '*' )
+            else if ( flag3 == 1)
             {
-                if ( flag2 == 1 )
-                {
-                    flag3 = 1;
-                    flag2 = 0;
-                }
-                else if ( flag3 == 1)
-                {
-                   // flag2 = 0;
-                }
-                else
-                {
-                    printf("%c", c);
-                }
+                // flag2 = 0;
             }
-
-            else if ( flag == 0  && flag3 == 0 )//&& flag2 == 0 )
+            else
             {
                 printf("%c", c);
             }
         }
-        fclose(file);
+
+        else if ( flag == 0  && flag3 == 0 )//&& flag2 == 0 )
+        {
+            printf("%c", c);
+        }
     }
+    fclose(file);
+
 }
 
 int main()
 {
-    ex1_6();
+    ex1_13();
     return(0);
 }
