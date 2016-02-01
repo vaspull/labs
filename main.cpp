@@ -160,14 +160,32 @@ void ex1_10()
 
 #define IN 1
 #define OUT 0
-#define NADO 2
-#define NENADO 3
+
+void ex1_11()
+{
+    int c, nl, nw, nc, state;
+    state = OUT;
+    nl = nw = nc = 2147483645;
+    while ( ( c = getchar() ) != EOF )
+    {
+        ++nc;
+        if ( c == '\n' )
+            ++nl;
+        if ( c == ' ' || c == '\n' || c == '\t' )
+            state = OUT;
+        else if ( state == OUT )
+        {
+            state = IN;
+            ++nw;
+        }
+    }
+    printf ("%d %d %d\n", nl, nw, nc);
+}
 
 void ex1_12()
 {
     int c = 1;
     int state;
-    int state2 = NENADO;
     state = OUT;
     while ( c != EOF )
     {
@@ -175,11 +193,6 @@ void ex1_12()
         if ( c == ' ' )
         {
             state = OUT;
-            state2 = NADO;
-            putchar('\n');
-        }
-        else if ( c == '\t' && state2 == NENADO)
-        {
             putchar('\n');
         }
         else if ( state == OUT )
@@ -194,8 +207,9 @@ void ex1_12()
 
 void ex1_13()
 {
+    printf("Gistogramma slov\n");
     int wlen = 0;
-    char c;
+    int c = 0;
     int i;
     while( c  != EOF )
     {
@@ -211,60 +225,103 @@ void ex1_13()
     }
 }
 
+//пример из учебника, раздел 1.6
+
+void exemple()
+{
+    int c, i, nwhite, nother;
+    int ndigit[10];
+    nwhite = nother = 0;
+    for (i = 0; i < 10; ++i)
+        ndigit[i]= 0;
+    while ((c = getchar()) != EOF)
+        if (c >= '0' && c <= '9' )
+            ++ndigit[c - '0' ];
+        else if (c == ' ' || c == '\n' || c == '\t')
+            ++nwhite;
+        else
+            ++nother;
+    printf ("digit  =");
+    for (i=0; i < 10; ++i)
+        printf(" %d", ndigit[i]);
+    printf (", symbol-separate = %d, another = %d\n", nwhite, nother);
+}
+
+//моя функция разбора строк на символы
+void exemple2()
+{
+    int c, i;
+    int arr[250];
+    int counter = 0;
+    int counter2 = 0;
+    char arrSymbol[250];
+    for ( int v = 0 ; v < 250 ; ++v ) arrSymbol[v] = 0;
+    for ( i = 0 ; i < 250 ; ++i ) arr[i]= 0;
+    while ( ( c = getchar() ) != EOF )
+    {
+        if ( c >= 97 && c <= 122 )
+        {
+            ++arr[c];
+            ++counter2;
+            arrSymbol[c] = c;
+        }
+        else if ( c >= 65 && c <= 90 )
+        {
+            ++arr[c];
+            ++counter2;
+            arrSymbol[c] = c;
+        }
+        else if ( c >= 128 && c <= 175 )
+        {
+            ++arr[c];
+            ++counter2;
+            arrSymbol[c] = c;
+        }
+        else if ( c >= 224 && c <= 241 )
+        {
+            ++arr[c];
+            ++counter2;
+            arrSymbol[c] = c;
+        }
+        else ++counter2;
+    }
+    printf ("Summ of used chars: %d\n", counter2);
+    printf ("Used symbols:\n");
+
+    for ( i=0; i < 250; ++i )
+    {
+        if ( arr[i] != 0)
+        {
+            counter = counter + arr[i];
+            printf(" Sybbol: %c  %d\n", arrSymbol[i], arr[i]);
+        }
+    }
+    printf("Summ of used symbols: %d\n", counter);
+}
+
 void ex1_14()
 {
-    char A[MAXLINE];
-    int length = 0;
-    while ( ( length = getline(A, MAXLINE)) > 0 )
+    printf("Gistogramma symbolov\n");
+    int c, i;
+    int arr[250];
+    char arrSymbol[250];
+    for ( int v = 0 ; v < 250 ; ++v ) arrSymbol[v] = 0;
+    for ( i = 0 ; i < 250 ; ++i ) arr[i]= 0;
+    while ( ( c = getchar() ) != '\n' )
     {
-        char e[100];
-        for ( int i = 0 ; i > 100 ; i++ ) e[i] = 0;
-        long j = 0;
-        char b;
-        long o = 0;
-        long counter = 0;
-        long p = 0;
-        printf("The initial line of %d characters.\n" , length ) ;
-        for ( int c = 0 ; c < length ; c++ )
+        if (  ( ( c >= 97 ) && ( c <= 122 ) ) ||  ( ( c >= 65 ) && ( c <= 90 ) ) || ( ( c >= 128 ) && ( c <= 175 ) ) || ( ( c >= 224 ) && ( c <= 241 ) ) )
         {
-            long k = 1;
-            int t = 0;
-            p = 0;
-
-            b = A[c];
-            while( e[j] ) j++;
-            for ( int i = 0; i < length; i++)
-            {
-                char s = e[p];
-                char ss = A[i];
-                if ( b == ss )
-                {
-                    counter++;
-                }
-                if  ( ( p <= j ) && ( k != 0 ) )
-                {
-                    if ( b == s )
-                    {
-                        t = 0;
-                        k = 0;
-                    }
-                    else
-                    {
-                        t = 1;
-                        k = 1;
-                    }
-                }
-                p++;
-            }
-            if ( t == 1 )
-            {
-                printf("%c " , b);
-                for ( int i = 0 ; i < counter ; i++) printf("|");
-                printf("\n");
-                e[o] = b;
-                o++;
-            }
-            counter = 0;
+            ++arr[c];
+            arrSymbol[c] = c;
+        }
+    }
+    for ( i = 0 ; i < 250 ; ++i )
+    {
+        if ( arr[i] != 0 )
+        {
+            printf(" Sybbol: %c ", arrSymbol[i]);//, arr[i]);
+            for (int counter = 0; counter < arr[i] ; counter++ ) printf("|");
+            printf("\n");
         }
     }
 }
@@ -302,6 +359,7 @@ void copy(char to[], char from[])
 
 void ex1_16()
 {
+    printf ("Find longest line\n\n");
     int len;
     int max;
     char line[MAXLINE];
@@ -319,6 +377,7 @@ void ex1_16()
 
 void ex1_17()
 {
+    printf ("Return line if it longest then 80 symbols\n\n");
     int len;
     char line[MAXLINE];
     while ((len = getline(line, MAXLINE)) != EOF)
@@ -364,6 +423,7 @@ int del_space(char to[], char from[])
 
 void ex1_18()
 {
+    printf ("Delete excess spaces and tabulation\n\n");
     int len;
     char line[1000];
     char newline[1000];
@@ -391,6 +451,7 @@ void reverse(char to[], char from[])
 
 void ex1_19()
 {
+    printf ("It displays the text on the back to front\n\n");
     char A[MAXLINE];
     for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
     char B[MAXLINE];
@@ -431,6 +492,7 @@ void detab(char to[], char from[])
 
 void ex1_20()
 {
+    printf ("Changes tabs to spaces\n\n");
     char A[MAXLINE];
     for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
     char B[MAXLINE];
@@ -471,6 +533,7 @@ void entab(char to[], char from[])
 
 void ex1_21()
 {
+    printf ("Replaces spaces with tabs\n\n");
     char A[MAXLINE];
     for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
     char B[MAXLINE];
@@ -502,6 +565,7 @@ int get_fix_line(char s[], int lim)
 
 void ex1_22()
 {
+    printf("A string longer than 20 characters is cut and transferred");
     int length;
     char line[20];
     length = 0;
@@ -513,9 +577,11 @@ void ex1_22()
 
 void ex1_23()
 {
-    int flag = 0;
-    int flag2 = 0;
-    int flag3 = 0;
+    printf("It displays the contents of the file C program without comments");
+    int flagSLASH = 0;
+    int flagSTAR = 0;
+    int flagSTAR2 = 0;
+    int flagSLASH2 = 0;
     char c;
     const char *fname = "main.cpp";
     FILE* file = fopen(fname, "r");
@@ -528,50 +594,65 @@ void ex1_23()
     {
         if ( c == '/' )
         {
-            if (flag3 == 1)
+            if (flagSTAR2 == 1)
             {
-                flag3 = 0;
+                flagSTAR = 0;
+                flagSTAR2 = 0;
+                flagSLASH = 0;
+                flagSLASH2 = 0;
             }
-            else
+            else if ( flagSLASH == 0 )
             {
-                flag = 1;
-                flag2 = 1;
+                flagSLASH = 1;
             }
-        }
-
-        else if ( c == '\n' )
-        {
-            flag = 0;
-            printf( "%c" , c );
+            else if ( flagSLASH == 1 )
+            {
+                flagSLASH2 = 1;
+            }
         }
         else if ( c == '*' )
         {
-            if ( flag2 == 1 )
+            if ( flagSLASH == 1 && flagSTAR == 0 )
             {
-                flag3 = 1;
-                flag2 = 0;
+                flagSTAR = 1;
+                flagSLASH2 = 1;
             }
-            else if ( flag3 == 1)
+            else if ( flagSTAR == 1 )
             {
-                // flag2 = 0;
+                flagSTAR2 = 1;
             }
             else
             {
                 printf("%c", c);
             }
         }
-
-        else if ( flag == 0  && flag3 == 0 )//&& flag2 == 0 )
+        else if ( c == '\n' )
         {
+            flagSLASH = 0;
             printf("%c", c);
+        }
+        else if ( flagSLASH == 1 && flagSLASH2 == 0)
+        {
+            flagSLASH = 0;
+            printf("/ %c", c);
+        }
+        else if ( flagSLASH == 0 && flagSTAR == 0 )
+        {
+            flagSLASH2 = 0;
+            flagSTAR = 0;
+            flagSTAR2 = 0;
+            printf("%c", c);
+        }
+        else if (flagSTAR2 == 1)
+        {
+            flagSTAR2 = 0;
         }
     }
     fclose(file);
-
 }
 
 int main()
 {
-    ex1_13();
+    ex1_23();
     return(0);
 }
