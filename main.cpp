@@ -577,11 +577,13 @@ void ex1_22()
 
 void ex1_23()
 {
-    printf("It displays the contents of the file C program without comments");
+    printf("It displays the contents of the file C program without comments\n\n");
     int flagSLASH = 0;
     int flagSTAR = 0;
     int flagSTAR2 = 0;
     int flagSLASH2 = 0;
+    int flagKAVICHKA = 0;
+    int flagKAVICHKA2 = 0;
     char c;
     const char *fname = "main.cpp";
     FILE* file = fopen(fname, "r");
@@ -592,7 +594,33 @@ void ex1_23()
     }
     while ( ( c = getc(file) ) != EOF )
     {
-        if ( c == '/' )
+        if ( c == 39 && flagSLASH == 0 && flagSTAR == 0 )
+        {
+            if ( flagKAVICHKA2 == 1)
+            {
+                flagKAVICHKA2 = 0;
+                printf("%c", c);
+            }
+            else
+            {
+                flagKAVICHKA2 = 1;
+                printf("%c", c);
+            }
+        }
+        else if ( c == '"' && flagSLASH == 0 && flagSTAR == 0 && flagKAVICHKA2 == 0 )
+        {
+            if ( flagKAVICHKA == 1)
+            {
+                flagKAVICHKA = 0;
+                printf("%c", c);
+            }
+            else
+            {
+                flagKAVICHKA = 1;
+                printf("%c", c);
+            }
+        }
+        else if ( c == '/' && flagKAVICHKA == 0 && flagKAVICHKA2 == 0 )
         {
             if (flagSTAR2 == 1)
             {
@@ -651,8 +679,87 @@ void ex1_23()
     fclose(file);
 }
 
+int readFile(FILE *fPtr, char line[])
+{
+    int c = 0;
+    int i = 0;
+    int line_counter = 1;
+    while ( ( c = getc(fPtr) ) != EOF )
+    {
+        if ( c == '\n' )
+        {
+            line_counter++;
+            line[i] = c;
+            ++i;
+        }
+        line[i] = c;
+        ++i;
+    }
+    return line_counter;
+}
+
+int readFile2(FILE *fPtr, char line[], int i)
+{
+    int d = 0;
+    int c = 0;
+    int line_counter = 1;
+    while ( ( c = getc(fPtr) != EOF ) && ( line_counter <= i ) )
+    {
+        if ( c == '\n' )
+        {
+            line_counter++;
+            line[d] = c;
+            ++d;
+        }
+        line[d] = c;
+        ++d;
+    }
+    return line_counter;
+}
+
+void somefunction()
+{
+    printf("Some text about this fucking programm \n\n");
+    char c[30000];
+    const char *fname = "main.cpp";
+    FILE* file = fopen(fname, "r");
+    if(file == NULL)
+    {
+        printf("File '%s' does not exist.\n", fname);
+        return;
+    }
+    int i;
+    for ( i = 0 ; i < 10 ; i++)
+    {
+        readFile2(file, c, i);
+        printf("%s\n", c);
+        for (int a = 0; a < 102400; a++) c[a] = 0;
+    }
+
+}
+
+void ex1_24()
+{
+    printf("Some text about this fucking programm \n\n");
+    int line_counter;
+    //int flagSKOBKAKRUG = 0;
+    //int flagSKOBKAKVADRAT = 0;
+    //int flagSKOBKAFIGURA = 0;
+    char c[30000];
+    const char *fname = "main.cpp";
+    FILE* file = fopen(fname, "r");
+    if(file == NULL)
+    {
+        printf("File '%s' does not exist.\n", fname);
+        return;
+    }
+    line_counter = readFile(file, c);
+    printf("%s\n\n", c);
+    printf("%d lines in file '%s'\n", line_counter, fname);
+}
+
 int main()
 {
-    ex1_23();
+    somefunction();
     return(0);
 }
