@@ -411,25 +411,30 @@ int del_space(char to[], char from[])
     return j;
 }
 
+int getline18(char s[], int lim)
+{
+    int c = 1;
+    int i;
+    for ( i = 0; i < lim-1 && ( c = getchar() ) != EOF ; ++i )
+        s[i] = c;
+    if ( c == 'n' )
+    {
+        s[i] = c;
+        ++i;
+    }
+    s[i] = '\0';
+    return i;
+}
+
 void ex1_18()
 {
     printf ("Delete excess spaces and tabulation, enter string(empty for exit):\n");
     int len;
-    /*
-    char line[1000] = "line_1 four    spaces\n"
-                      "line_2 \t\t\t with 3 tabs and empty line after\n\n"
-                      "line_3 last line";
-                      */
     char line[1000];
     char newline[1000];
     len = 0;
-    while ( ( len = getline(line, 1000) ) > 0 )
+    while ( ( len = getline18(line, 1000) ) > 0 )
     {
-        printf("\n");
-        // debug. line with codes...
-        for (int i = 0; line[i] != '\0'; i++)
-            printf("%d ", line[i]);
-        printf("\n");
         del_space(newline, line);
         printf("%s" , newline);
     }
@@ -466,7 +471,7 @@ void ex1_19()
 
 void detab(char to[], char from[])
 {
-    int tab = 4;
+    int tab = 1;
     int i = 0;
     int j = 0;
     int k;
