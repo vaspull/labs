@@ -2,21 +2,6 @@
 
 #define MAXLINE 3000
 
-int getline(char s[], int lim)
-{
-    int c = 1;
-    int i;
-    for ( i = 0; i < lim-1 && ( c = getchar() ) != EOF && c != '\n'; ++i )
-        s[i] = c;
-    if ( c == 'n' )
-    {
-        s[i] = c;
-        ++i;
-    }
-    s[i] = '\0';
-    return i;
-}
-
 void ex1_1()
 {
     printf("Hello, World!\n");
@@ -184,41 +169,32 @@ void ex1_11()
 
 void ex1_12()
 {
-    int c = 1;
-    int state;
-    state = OUT;
-    while ( c != EOF )
+    int c, state = OUT;
+    while ( (c = getchar()) != EOF )
     {
-        c = getchar();
-        if ( c == ' ' )
-        {
+        if ( c == ' ' || c == '\t' || c == '\n') {
+            if (state == IN)
+                putchar('\n');
             state = OUT;
-            putchar('\n');
-        }
-        else if ( state == OUT )
-        {
+        } else {
             state = IN;
             putchar(c);
         }
-        else
-            putchar(c);
     }
 }
 
 void ex1_13()
 {
-    printf("Gistogramma slov\n");
-    int wlen = 0;
-    int c = 0;
-    int i;
-    while( c  != EOF )
+    printf("Word's length bar chart:\n");
+    int wlen = 0, c;
+    while( (c = getchar()) != EOF )
     {
-        c = getchar();
         if ( c != ' ' && c != '\n' && c != '\t' )
             wlen++;
         else
         {
-            for(i = 0; i < wlen; i++) printf("|");
+            for(int i = 0; i < wlen; i++)
+                printf("|");
             printf("\n");
             wlen = 0;
         }
@@ -301,29 +277,24 @@ void exemple2()
 
 void ex1_14()
 {
-    printf("Gistogramma symbolov\n");
+    printf("Symbols bar chart (code and 'symbol'), enter string: ");
     int c, i;
-    int arr[250];
-    char arrSymbol[250];
-    for ( int v = 0 ; v < 250 ; ++v ) arrSymbol[v] = 0;
-    for ( i = 0 ; i < 250 ; ++i ) arr[i]= 0;
+#define MAXCHARS 256
+    int arr[MAXCHARS];
+    for ( i = 0; i < MAXCHARS; ++i )
+        arr[i]= 0;
     while ( ( c = getchar() ) != '\n' )
-    {
-        if (  ( ( c >= 97 ) && ( c <= 122 ) ) ||  ( ( c >= 65 ) && ( c <= 90 ) ) || ( ( c >= 128 ) && ( c <= 175 ) ) || ( ( c >= 224 ) && ( c <= 241 ) ) )
-        {
-            ++arr[c];
-            arrSymbol[c] = c;
-        }
-    }
-    for ( i = 0 ; i < 250 ; ++i )
-    {
+        ++arr[c];
+    for ( i = 0 ; i < MAXCHARS ; ++i )
         if ( arr[i] != 0 )
         {
-            printf(" Sybbol: %c ", arrSymbol[i]);
-            for (int counter = 0; counter < arr[i] ; counter++ ) printf("|");
+            printf("%3d ", i);
+            if (i >= ' ')
+                printf("'%c': ", i);
+            for (int counter = 0; counter < arr[i] ; counter++ )
+                printf("|");
             printf("\n");
         }
-    }
 }
 
 float celfahr(float cel)
@@ -349,6 +320,21 @@ void ex1_15()
     }
 }
 
+int getline(char s[], int lim)
+{
+    int c = 1;
+    int i;
+    for ( i = 0; i < lim-1 && ( c = getchar() ) != EOF && c != '\n'; ++i )
+        s[i] = c;
+    if ( c == 'n' )
+    {
+        s[i] = c;
+        ++i;
+    }
+    s[i] = '\0';
+    return i;
+}
+
 void copy(char to[], char from[])
 {
     int i;
@@ -359,31 +345,35 @@ void copy(char to[], char from[])
 
 void ex1_16()
 {
-    printf ("Find longest line\n\n");
-    int len;
-    int max;
-    char line[MAXLINE];
-    char longest[MAXLINE];
-    max = 0;
-    while ((len = getline(line, MAXLINE)) > 0)
-        if (len > max) {
-            max = len;
-            copy(longest, line);
+#define MAX_LINE 3
+    printf ("Enter lines(empty for exit): ");
+    int readed, max = 0, len = 0;
+    char buffer[MAX_LINE], line[MAX_LINE*10], longest[MAX_LINE*10];
+    while ((readed = getline(buffer, MAX_LINE)) > 0 || len > 0) {
+        copy(line+len, buffer);
+        len += readed;
+        if ( readed != MAX_LINE-1 ) {
+            if (len > max) {
+                max = len;
+                copy(longest, line);
+            }
+            len = 0;
         }
+    }
     if (max > 0)
-        printf("%s\n", longest);
-    printf("The legth of the longest string: %d\n", max);
+        printf("The longest string: %s.\n", longest);
+    printf("The length of the longest string is %d.\n", max);
 }
 
 void ex1_17()
 {
-    printf ("Return line if it longest then 80 symbols\n\n");
+    printf ("Return line if it longest then 5 symbols, enter string(empty for exit):\n");
     int len;
     char line[MAXLINE];
-    while ((len = getline(line, MAXLINE)) != EOF)
-        if (len > 80) {
-            printf("%s\n", line);
-            printf("The legth of the string: %d\n\n", len);
+    while ((len = getline(line, MAXLINE)) != 0)
+        if (len > 5) {
+            printf("String: %s\n", line);
+            printf("The length of the string: %d\n", len);
         }
 }
 
@@ -423,13 +413,23 @@ int del_space(char to[], char from[])
 
 void ex1_18()
 {
-    printf ("Delete excess spaces and tabulation\n\n");
+    printf ("Delete excess spaces and tabulation, enter string(empty for exit):\n");
     int len;
+    /*
+    char line[1000] = "line_1 four    spaces\n"
+                      "line_2 \t\t\t with 3 tabs and empty line after\n\n"
+                      "line_3 last line";
+                      */
     char line[1000];
     char newline[1000];
     len = 0;
     while ( ( len = getline(line, 1000) ) > 0 )
     {
+        printf("\n");
+        // debug. line with codes...
+        for (int i = 0; line[i] != '\0'; i++)
+            printf("%d ", line[i]);
+        printf("\n");
         del_space(newline, line);
         printf("%s" , newline);
     }
@@ -861,6 +861,6 @@ void ex1_24()
 
 int main()
 {
-    ex1_24();
+    ex1_18();
     return(0);
 }
