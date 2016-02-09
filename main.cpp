@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <limits.h>
+#include <float.h>
 
 #define MAXLINE 3000
 
@@ -864,8 +866,141 @@ void ex1_24()
     else printf("%d braces, braces are closed.\n\n\n\n\n", counter_Skobka_figura+counter_Skobka_figura2);
 }
 
+
+//<--------------Chapter 2--------------------->//
+
+int power(int base, int n)
+{
+    int i, p;
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * base;
+    return p;
+}
+
+float power2(float base, int n)
+{
+    float i, p;
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * base;
+    return p;
+}
+
+double power4(double base, int n)
+{
+    double i, p;
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * base;
+    return p;
+}
+double power5(double base, int n)
+{
+    double i, p;
+    p = 1;
+    for (i = -1; i >= n; --i) p = p * base;
+    p = 1/p;
+    return p;
+}
+
+
+
+void ex2_1()
+{
+    printf("Integer datatypes:\n\n");
+    printf("Signed types:\n");
+    printf("char            min: %d             char max: %d\n", CHAR_MIN, CHAR_MAX);
+    printf("int             min: %d       int max: %d\n", INT_MIN, INT_MAX);
+    printf("long            min: %ld      long max: %ld\n", LONG_MIN, LONG_MAX);
+    printf("short           min: %d          short max: %d\n\n", SHRT_MIN, SHRT_MAX);
+    printf("UnSigned types:\n");
+    printf("unsigned char   min: 0      unsigned char  max: %d\n", UCHAR_MAX);
+    printf("unsigned int    min: 0      unsigned int   max: %u\n", UINT_MAX);
+    printf("unsigned long   min: 0      unsigned long  max: %lu\n", ULONG_MAX);
+    printf("unsigned short  min: 0      unsigned short max: %d\n\n", USHRT_MAX);
+    printf("Float & double datatypes:\n");
+    printf("float           min: %e   float max: %e\n", FLT_MIN, FLT_MAX);
+    printf("double          min: %e  double max: %e\n\n", DBL_MIN, DBL_MAX);
+    printf("The calculated values of data types:\n\n");
+    printf("Signed types:\n");
+    long p;
+    unsigned long p2;
+    float p3;
+    double p4;
+    int CHAR = 2;
+    int INT = 2;
+    int LONG = 2;
+    int SHORT = 2;
+    p = power( CHAR, 7 );
+    printf("char            min: %ld             char max: %ld\n", p*(-1), p-1);
+    p = power( INT, 31 );
+    printf("int             min: %ld       int max: %ld\n", p*(-1), p-1);
+    p = power( LONG, 31 );
+    printf("long            min: %ld      long max: %ld\n", p*(-1), p-1);
+    p = power( SHORT, 15 );
+    printf("short           min: %ld          short max: %ld\n\n", p*(-1), p-1);
+    printf("UnSigned types:\n");
+    p = power( CHAR, 8 );
+    printf("char            min: 0                char max: %lu\n", p-1);
+    p2 = (power( INT, 31 ) + (power( INT, 31)-1));
+    printf("int             min: 0                 int max: %lu\n", p2);
+    p2 = (power( INT, 31 ) + (power( INT, 31)-1));
+    printf("long            min: 0                long max: %lu\n", p2);
+    p = power( SHORT, 16 );
+    printf("short           min: 0               short max: %lu\n\n", p-1);
+    printf("Float & double datatypes:\n");
+    p3 = power5(2,-127)*1.9999999;
+    printf("float           min: %e", p3);
+    p3 = power2(2,127)*1.9999999;
+    printf("   float max: %e\n", p3);
+    p4 = power5(2,-1023)*1.9999999;
+    printf("double          min: %e", p4);
+    p4 = power4(2,1023)*1.9999999;
+    printf("  double max: %e\n\n", p4);
+
+}
+
 int main()
 {
-    ex1_18();
+    ex2_1();
     return(0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
