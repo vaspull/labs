@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
+#include <math.h>
 
 #define MAXLINE 3000
 
@@ -878,34 +879,6 @@ int power(int base, int n)
     return p;
 }
 
-float power2(float base, int n)
-{
-    float i, p;
-    p = 1;
-    for (i = 1; i <= n; ++i)
-        p = p * base;
-    return p;
-}
-
-double power4(double base, int n)
-{
-    double i, p;
-    p = 1;
-    for (i = 1; i <= n; ++i)
-        p = p * base;
-    return p;
-}
-double power5(double base, int n)
-{
-    double i, p;
-    p = 1;
-    for (i = -1; i >= n; --i) p = p * base;
-    p = 1/p;
-    return p;
-}
-
-
-
 void ex2_1()
 {
     printf("Integer datatypes:\n\n");
@@ -927,7 +900,9 @@ void ex2_1()
     long p;
     unsigned long p2;
     float p3;
+    float p32 = 1;
     double p4;
+    double p42;
     int CHAR = 2;
     int INT = 2;
     int LONG = 2;
@@ -950,57 +925,106 @@ void ex2_1()
     p = power( SHORT, 16 );
     printf("short           min: 0               short max: %lu\n\n", p-1);
     printf("Float & double datatypes:\n");
-    p3 = power5(2,-127)*1.9999999;
-    printf("float           min: %e", p3);
-    p3 = power2(2,127)*1.9999999;
-    printf("   float max: %e\n", p3);
-    p4 = power5(2,-1023)*1.9999999;
-    printf("double          min: %e", p4);
-    p4 = power4(2,1023)*1.9999999;
-    printf("  double max: %e\n\n", p4);
+    for (p3 = 1 ; isfinite(p3)==true;)
+    {
+        p3 *= 1.01;
+        if (isfinite(p3)==true)
+        {
+            p32 = p3;
+        }
+    };
+    printf("float max: %e\n", p32);
+    for ( p4 = 1 ; isfinite(p4) == true;)
+    {
+        p4*=1.01;
+        if (isfinite(p4)==true)
+        {
+            p42 = p4;
+        }
+    }
+    printf("double max: %e\n", p42);
+}
 
+void ex2_2()
+{
+    printf("Some text about this programm...\n");
+    int lim = 1000;
+    char s[1000];
+    for (int x; x < 1000; x++) s[x] = 0;
+    int c = 1;
+    int i;
+    for ( i = 0 ; i < lim-1 ; ++i )
+    {
+        if ( ( c = getchar() ) != EOF )
+        {
+            s[i] = c;
+        }
+        else
+            break;
+    }
+    if ( c == 'n' )
+    {
+        s[i] = c;
+        ++i;
+    }
+    s[i] = '\0';
+    printf("%s", s);
+}
+
+int htoi(char s[])
+{
+    int counter = 1;
+    int A;
+    A = 0;
+    for( int i = 0 ; s[i] != '\0' ; i++ )
+    {
+        if( s[i] == '0' && counter == 1 )
+        {
+            ++i;
+            if ( s[i] == 'x' || s[i] == 'X' )
+            {
+                ++i;
+            }
+        }
+        int c;
+        c = s[i];
+        if ( c == '0' && counter > 1 )
+        {
+            c = 0;
+        }
+        else if ( c >= '1' && c <= '9' )
+        {
+            c -= '0';
+        }
+        else if ( c >= 'a' && c <= 'f' )
+        {
+            c = 10 + c -'a';
+        }
+        else if ( c >= 'A' && c <= 'F' )
+        {
+            c = 10 + c - 'A';
+        }
+        else break;
+        counter++;
+        A = A*16 + c;
+    }
+    return A;
+}
+
+void ex2_3()
+{
+    int x = 0;
+    printf("Demostration work function 'htoi' \n");
+    char line[MAXLINE];
+    while ( getline(line, MAXLINE) != EOF )
+    {
+        x = htoi(line);
+        printf("%d\n", x);
+    }
 }
 
 int main()
 {
-    ex2_1();
+    ex2_3();
     return(0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
