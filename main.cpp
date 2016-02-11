@@ -927,20 +927,14 @@ void ex2_1()
     printf("Float & double datatypes:\n");
     for (p3 = 1 ; isfinite(p3)==true;)
     {
+        p32 = p3;
         p3 *= 1.01;
-        if (isfinite(p3)==true)
-        {
-            p32 = p3;
-        }
     };
     printf("float max: %e\n", p32);
     for ( p4 = 1 ; isfinite(p4) == true;)
     {
+        p42 = p4;
         p4*=1.01;
-        if (isfinite(p4)==true)
-        {
-            p42 = p4;
-        }
     }
     printf("double max: %e\n", p42);
 }
@@ -1023,8 +1017,78 @@ void ex2_3()
     }
 }
 
+void squeeze(char s1[], char s2[])
+{
+    int a = 0;
+    while ( s1[a] != '\0' )
+    {
+        int b = 0;
+        while ( s2[b] != '\0' )
+        {
+            if ( s1[a] == s2[b] )
+            {
+                s1[a] = '_';
+                b++;
+            }
+            else
+                b++;
+        }
+        a++;
+    }
+}
+
+void ex2_4()
+{
+    char s1[] = "leteli ptisy daleko kakoy koshmar";
+    char s2[] = "letet vsem ptisam ne legko";
+    printf("Original str:\n%s\n", s1);
+    squeeze(s1,s2);
+    printf("%s\n\n", s1);
+}
+
+int any( char s1[], char s2[])
+{
+    int p = 0;
+    int a = 0;
+    int flagp = 0;
+    while ( s1[a] != '\0' )
+    {
+        int b = 0;
+        while ( s2[b] != '\0' )
+        {
+            if ( s1[a] == s2[b] )
+            {
+                if (flagp == 0)
+                {
+                    p = a;
+                    p++;
+                }
+                b++;
+                flagp++;
+            }
+            else
+                b++;
+        }
+        a++;
+    }
+    if ( p == 0 )
+    {
+        p = -1;
+    }
+    return p;
+}
+
+void ex2_5()
+{
+    int p = 0;
+    char s1[] = "12345leteli ptisy daleko kakoy koshmar";
+    char s2[] = "letet vsem ptisam ne legko";
+    p = any(s1,s2);
+    printf("%d\n\n", p);
+}
+
 int main()
 {
-    ex2_3();
+    ex2_5();
     return(0);
 }
