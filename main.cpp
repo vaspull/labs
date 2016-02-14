@@ -380,67 +380,48 @@ void ex1_17()
         }
 }
 
-int del_space(char to[], char from[])
+int deleteEmptySeuquences(char to[], char from[])
 {
-    int c;
-    int i = 0;
-    int j = 0;
-    int s = 0;
-    while ( ( c = from[i] ) != '\n' )
-    {
-        if ( c == ' ' || c == '\t' )
-        {
-            if (s == 0)
-            {
-                to[j] = ' ';
-                s = 1;
-                j++;
+    int j = 0, isEmptySequence = 0;
+    for (int i = 0; from[i] != '\0'; i++) {
+        if (from[i] == ' ' || from[i] == '\t' || from[i] == '\n') {
+            if (!isEmptySequence) {
+                isEmptySequence = 1;
+                to[j++] = from[i];
             }
+        } else {
+            to[j++] = from[i];
+            isEmptySequence = 0;
         }
-        else
-        {
-            to[j] = c;
-            s = 0;
-            j++;
-        }
-        i++;
-    }
-    if ( c == '\n' )
-    {
-        to[j] = c;
-        j++;
     }
     to[j] = '\0';
     return j;
 }
 
-int getline18(char s[], int lim)
-{
-    int c = 1;
-    int i;
-    for ( i = 0; i < lim-1 && ( c = getchar() ) != EOF ; ++i )
-        s[i] = c;
-    if ( c == 'n' )
-    {
-        s[i] = c;
-        ++i;
-    }
-    s[i] = '\0';
-    return i;
-}
-
 void ex1_18()
 {
-    printf ("Delete excess spaces and tabulation, enter string(empty for exit):\n");
-    int len;
-    char line[1000];
-    char newline[1000];
-    len = 0;
-    while ( ( len = getline18(line, 1000) ) > 0 )
-    {
-        del_space(newline, line);
-        printf("%s" , newline);
+    printf ("Delete excess spaces, tabulations at the end of the every string and empty strings(EOF for exit):\n");
+    char line[1000] = "";
+    while ( line[0]  != EOF ) {
+        int len = 0;
+        while ( (line[len] = getchar()) != '\n')
+            len++;
+        printf("Result string [length]: ");
+        if (len == 0)
+            printf("[%d] The string is empty.\n", len);
+        else {
+            while ( line[len] == '\t' || line[len] == ' ' || line[len] == '\n')
+                len--;
+            line[++len] = '\0';
+            printf("[%d] %s\n", len, line);
+        }
     }
+    char string_1[] = "Word_1, 3 spaces   2 tabs\t\t. Next line.\n"
+                      "Empty two lines.\n\n"
+                      "Last line...\n";
+    printf("Testing clear function, source string is:\n%s", string_1);
+    deleteEmptySeuquences(line, string_1);
+    printf("Destination string after calling 'deleteEmptySequences' function:\n%s", line);
 }
 
 void reverse(char to[], char from[])
@@ -450,11 +431,7 @@ void reverse(char to[], char from[])
     while (from[c]) c++;
     c--;
     while( c >= 0 )
-    {
-        to[d] = from[c];
-        c--;
-        d++;
-    }
+        to[d++] = from[c--];
 }
 
 void ex1_19()
@@ -474,24 +451,17 @@ void ex1_19()
 
 void detab(char to[], char from[])
 {
-    int tab = 1;
+    int tab = 4;
     int i = 0;
     int j = 0;
-    int k;
-    while ( from[i] != 0 )
+    while ( from[i] != '\0' )
     {
         if ( from[i] == '\t' )
         {
-            for ( k = 0 ; k < tab ; ++k )
-            {
-                to[j] = ' ';
-                j++;
-            }
-        }
-        else
-        {
-            to[j] = from[i];
-            j++;
+            for (int k = 0 ; k < tab ; ++k )
+                to[j++] = ' ';
+        } else {
+            to[j++] = from[i];
         }
         i++;
     }
@@ -518,12 +488,11 @@ void entab(char to[], char from[])
     int tab = 1;
     int i = 0;
     int j = 0;
-    int k;
-    while ( from[i] != 0 )
+    while ( from[i] != '\0' )
     {
         if ( from[i] == ' ' )
         {
-            for ( k = 0 ; k < tab ; ++k )
+            for (int k = 0 ; k < tab ; ++k )
             {
                 to[j] = '\t';
                 j++;
@@ -577,7 +546,7 @@ void ex1_22()
     int length;
     char line[20];
     length = 0;
-    while ( ( length = get_fix_line(line, 20) ) > 0 )
+    while ( ( length = get_fix_line(line, 5) ) > 0 )
     {
         printf("%s\n", line);
     }
@@ -1089,6 +1058,6 @@ void ex2_5()
 
 int main()
 {
-    ex2_5();
+    ex1_18();
     return(0);
 }
