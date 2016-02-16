@@ -525,28 +525,47 @@ void ex1_21()
 
 int get_fix_line(char s[], int lim)
 {
+    int counter = 1;
+    int in = 1;
     int c;
-    int i;
-    for ( i = 0 ; i < lim-1 && ( c = getchar() ) != EOF && c != '\n'; ++i )
+    int i = 0;
+    int g = 0;
+    for ( i = 0 ; g < lim-1 && (c = getchar()) != '\n' ; ++i )
     {
+        if ( c == ' ' || c == '\t' )
+        {
+            counter = 0;
+            in = 0;
+            s[i] = c;
+        }
+        else
+        {
         s[i] = c;
-    }
-    if ( i == lim-2 )
-    {
-        s[i] = '\n';
-        i++;
+        counter++;
+        }
+        g++;
+        if ( (g >= lim-2) && in == 0 )
+        {
+            s[(i-counter)] = '\n';
+            g = counter-1;
+            in = 1;
+        }
     }
     s[i] = '\0';
+    //printf("%s\n", s);
+    //printf("%d %d %d %d\n\n", counter, g, i, lim ); //debug line
     return i;
 }
 
+
 void ex1_22()
 {
-    printf("A string longer than 20 characters is cut and transferred");
+    printf("A string longer than 20 characters is cut and transferred\n");
     int length;
-    char line[20];
+    char line[2000];
+    for (int i = 0; i < 2000; i++) line[i]=0;
     length = 0;
-    while ( ( length = get_fix_line(line, 5) ) > 0 )
+    while ( ( length = get_fix_line(line, 20) ) > 0 )
     {
         printf("%s\n", line);
     }
@@ -1058,6 +1077,6 @@ void ex2_5()
 
 int main()
 {
-    ex1_18();
+    ex1_22();
     return(0);
 }
