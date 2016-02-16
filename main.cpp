@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <limits.h>
 #include <float.h>
 #include <math.h>
@@ -9,7 +9,7 @@ void ex1_1()
 {
     printf("Hello, World!\n");
 }
-
+//
 void ex1_2()
 {
     printf("Hello, World!\a\n");
