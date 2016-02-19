@@ -451,62 +451,61 @@ void ex1_19()
 
 void detab(char to[], char from[])
 {
-    int tab = 8;
-    int lengthA = 0;
-    int j = 0;
-    for ( int templengthA = 0; from[templengthA] != NULL; templengthA++ )
+    int tab = 8, len = 0, j = 0, column = 0;
+    for ( int templengthA = 0; from[templengthA] != 0; templengthA++ )
     {
-        lengthA = templengthA;
+        len = templengthA;
     }
-    for ( int i = 0 ; i <= lengthA; i++ )
-    {
+    for ( int i = 0 ; i <= len ; i++) {
         if ( from[i] == '\t' )
-        {
-            int b = i;
-            while( b%tab ) b++;
-            while ( j < b )
-            {
-                to[j] = ' ';
-                j++;
-                lengthA++;
-            }
-        }
-        else
-        {
-            to[j] = from[i];
-            j++;
+            do {
+            column++;
+            to[j++] = ' ';
+        } while (column%tab);
+        else {
+            if ( from[i] == '\n')
+                column = 0;
+            else column++;
+            to[j++] = from[i];
         }
     }
+    to[j] = '\0';
 }
 
 void entab(char to[], char from[])
 {
-    int tab = 1;
-    int i = 0;
-    int j = 0;
-    while ( from[i] != '\0' )
+    int tab = 8, len = 0, j = 0, column = 0, spaces = 0;
+    for ( int templengthA = 0; from[templengthA] != 0; templengthA++ )
     {
-        if ( from[i] == ' ' )
-        {
-            for (int k = 0 ; k < tab ; ++k )
-            {
-                to[j] = '\t';
-                j++;
-            }
-        }
+        len = templengthA;
+    }
+    for ( int i = 0 ; i <= len ; i++) {
+        if ( from[i] == '\t' )
+            column += ( tab - column%tab );
         else
-        {
-            to[j] = from[i];
-            j++;
+            column++;
+        if ( from[i] == ' ' ) {
+            spaces++;
+            if (!(column%tab)) {
+                spaces = 0;
+                to[j++] = '\t';
+            }
+        } else {
+            for (int g = 0; g < spaces; g++)
+                to[j++] = ' ';
+            spaces = 0;
+            if ( from[i] == '\n' )
+                column = 0;
+            to[j++] = from[i];
         }
-        i++;
     }
     to[j] = '\0';
 }
 
 void ex1_20_21()
 {
-    printf("Programm include ex1_20 & ex1_21. Working with tabs and spaces.\n\n\n");
+    printf("Programm include ex1_20 & ex1_21. Working with tabs and spaces.\n\n");
+    printf("Enter string:\n1\t2\t3\t4\t5\t6\t7\n");
     char A[3000];
     for ( int i = 0 ; i < 3000 ; i++) A[i] = 0;
     char B[3000];
@@ -515,26 +514,10 @@ void ex1_20_21()
     while ( ( length = getline(A, 3000)) > 0 )
     {
         detab(B,A);
-        printf("%s\n" , B);
+        printf("%s  - ex1_20\n" , B);
         for ( int i = 0 ; i < 3000 ; i++) A[i] = 0;
-        //for ( int i = 0 ; i < 3000 ; i++) B[i] = 0;
         entab(A,B);
-        printf("%s\n\n", A);
-    }
-}
-
-void ex1_21()
-{
-    printf ("Replaces spaces with tabs\n\n");
-    char A[MAXLINE];
-    for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
-    char B[MAXLINE];
-    for ( int i = 0 ; i < MAXLINE ; i++) B[i] = 0;
-    int length;
-    while ( ( length = getline(A, MAXLINE)) > 0 )
-    {
-        entab(B,A);
-        printf("%s\n" , B);
+        printf("%s  - ex1_21\n\n", A);
     }
 }
 
@@ -558,12 +541,13 @@ int get_fix_line(char s[], int lim)
             s[i] = c;
             counter++;
         }
-        g++;
+
         if ( (g >= lim-2) && in == 0 )
         {
             s[(i-counter)] = '\n';
-            g = counter-1;
+            g = counter;
             in = 1;
+            g++;
         }
     }
     s[i] = '\0';
