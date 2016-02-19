@@ -451,35 +451,31 @@ void ex1_19()
 
 void detab(char to[], char from[])
 {
-    int tab = 4;
-    int i = 0;
+    int tab = 8;
+    int lengthA = 0;
     int j = 0;
-    while ( from[i] != '\0' )
+    for ( int templengthA = 0; from[templengthA] != NULL; templengthA++ )
+    {
+        lengthA = templengthA;
+    }
+    for ( int i = 0 ; i <= lengthA; i++ )
     {
         if ( from[i] == '\t' )
         {
-            for (int k = 0 ; k < tab ; ++k )
-                to[j++] = ' ';
-        } else {
-            to[j++] = from[i];
+            int b = i;
+            while( b%tab ) b++;
+            while ( j < b )
+            {
+                to[j] = ' ';
+                j++;
+                lengthA++;
+            }
         }
-        i++;
-    }
-    to[j] = '\0';
-}
-
-void ex1_20()
-{
-    printf ("Changes tabs to spaces\n\n");
-    char A[MAXLINE];
-    for ( int i = 0 ; i < MAXLINE ; i++) A[i] = 0;
-    char B[MAXLINE];
-    for ( int i = 0 ; i < MAXLINE ; i++) B[i] = 0;
-    int length;
-    while ( ( length = getline(A, MAXLINE)) > 0 )
-    {
-        detab(B,A);
-        printf("%s\n" , B);
+        else
+        {
+            to[j] = from[i];
+            j++;
+        }
     }
 }
 
@@ -506,6 +502,25 @@ void entab(char to[], char from[])
         i++;
     }
     to[j] = '\0';
+}
+
+void ex1_20_21()
+{
+    printf("Programm include ex1_20 & ex1_21. Working with tabs and spaces.\n\n\n");
+    char A[3000];
+    for ( int i = 0 ; i < 3000 ; i++) A[i] = 0;
+    char B[3000];
+    for ( int i = 0 ; i < 3000 ; i++) B[i] = 0;
+    int length;
+    while ( ( length = getline(A, 3000)) > 0 )
+    {
+        detab(B,A);
+        printf("%s\n" , B);
+        for ( int i = 0 ; i < 3000 ; i++) A[i] = 0;
+        //for ( int i = 0 ; i < 3000 ; i++) B[i] = 0;
+        entab(A,B);
+        printf("%s\n\n", A);
+    }
 }
 
 void ex1_21()
@@ -540,8 +555,8 @@ int get_fix_line(char s[], int lim)
         }
         else
         {
-        s[i] = c;
-        counter++;
+            s[i] = c;
+            counter++;
         }
         g++;
         if ( (g >= lim-2) && in == 0 )
@@ -1077,6 +1092,6 @@ void ex2_5()
 
 int main()
 {
-    ex1_22();
+    ex1_20_21();
     return(0);
 }
