@@ -857,11 +857,10 @@ void ex1_24()
 
 //<--------------Chapter 2--------------------->//
 
-int power(int base, int n)
+long power(int base, unsigned int n)
 {
-    int i, p;
-    p = 1;
-    for (i = 1; i <= n; ++i)
+    long p = 1;
+    for (unsigned int i = 1; i <= n; ++i)
         p = p * base;
     return p;
 }
@@ -869,49 +868,46 @@ int power(int base, int n)
 void ex2_1()
 {
     printf("Integer datatypes:\n\n");
-    printf("Signed types:\n");
-    printf("char            min: %d             char max: %d\n", CHAR_MIN, CHAR_MAX);
-    printf("int             min: %d       int max: %d\n", INT_MIN, INT_MAX);
-    printf("long            min: %ld      long max: %ld\n", LONG_MIN, LONG_MAX);
-    printf("short           min: %d          short max: %d\n\n", SHRT_MIN, SHRT_MAX);
-    printf("UnSigned types:\n");
-    printf("unsigned char   min: 0      unsigned char  max: %d\n", UCHAR_MAX);
-    printf("unsigned int    min: 0      unsigned int   max: %u\n", UINT_MAX);
-    printf("unsigned long   min: 0      unsigned long  max: %lu\n", ULONG_MAX);
-    printf("unsigned short  min: 0      unsigned short max: %d\n\n", USHRT_MAX);
+    printf("Signed types:\tmin:\t\t\tmax:\n");
+    printf("char\t\t%d\t\t\t%d\n", CHAR_MIN, CHAR_MAX);
+    printf("int\t\t%d\t\t%d\n", INT_MIN, INT_MAX);
+    printf("long\t\t%ld\t%ld\n", LONG_MIN, LONG_MAX);
+    printf("short\t\t%d\t\t\t%d\n\n", SHRT_MIN, SHRT_MAX);
+    printf("UnSigned types:\tmin:\tmax:\n");
+    printf("unsigned char\t%u\t%u\n", 0, UCHAR_MAX);
+    printf("unsigned int\t%u\t%u\n", 0, UINT_MAX);
+    printf("unsigned long\t%u\t%lu\n", 0, ULONG_MAX);
+    printf("unsigned short\t%u\t%u\n\n", 0, USHRT_MAX);
     printf("Float & double datatypes:\n");
-    printf("float           min: %e   float max: %e\n", FLT_MIN, FLT_MAX);
-    printf("double          min: %e  double max: %e\n\n", DBL_MIN, DBL_MAX);
+    printf("float\t\t%e\t%e\n", FLT_MIN, FLT_MAX);
+    printf("double\t\t%e\t%e\n\n", DBL_MIN, DBL_MAX);
     printf("The calculated values of data types:\n\n");
-    printf("Signed types:\n");
-    long p;
-    unsigned long p2;
+    printf("Type:\tsigned min:\t\tsigned max:\t\tunsigned max:\n");
+    char charValue = 1;
+    short shortValue = 1;
+    int intValue = 1;
+    long longValue = 1;
+    int radix = 2, bitCounter = 1;
+    while ( (charValue *= radix) )
+        bitCounter++;
+    printf("char\t%ld\t\t\t%ld\t\t\t%lu\n", power(radix, bitCounter-1)*(-1), power(radix, bitCounter-1)-1, power(radix, bitCounter)-1);
+    bitCounter = 1;
+    while ( (shortValue *= radix) )
+        bitCounter++;
+    printf("short\t%ld\t\t\t%ld\t\t\t%lu\n", power(radix, bitCounter-1)*(-1), power(radix, bitCounter-1)-1, power(radix, bitCounter)-1);
+    bitCounter = 1;
+    while ( (intValue *= radix) )
+        bitCounter++;
+    printf("int\t%ld\t\t%ld\t\t%lu\n", power(radix, bitCounter-1)*(-1), power(radix, bitCounter-1)-1, power(radix, bitCounter)-1);
+    bitCounter = 1;
+    while ( (longValue *= radix) )
+        bitCounter++;
+    printf("long\t%ld\t%ld\t%lu\n", power(radix, bitCounter-1)*(-1), power(radix, bitCounter-1)-1, power(radix, bitCounter)-1);
     float p3;
     float p32 = 1;
     double p4;
     double p42;
-    int CHAR = 2;
-    int INT = 2;
-    int LONG = 2;
-    int SHORT = 2;
-    p = power( CHAR, 7 );
-    printf("char            min: %ld             char max: %ld\n", p*(-1), p-1);
-    p = power( INT, 31 );
-    printf("int             min: %ld       int max: %ld\n", p*(-1), p-1);
-    p = power( LONG, 31 );
-    printf("long            min: %ld      long max: %ld\n", p*(-1), p-1);
-    p = power( SHORT, 15 );
-    printf("short           min: %ld          short max: %ld\n\n", p*(-1), p-1);
-    printf("UnSigned types:\n");
-    p = power( CHAR, 8 );
-    printf("char            min: 0                char max: %lu\n", p-1);
-    p2 = (power( INT, 31 ) + (power( INT, 31)-1));
-    printf("int             min: 0                 int max: %lu\n", p2);
-    p2 = (power( INT, 31 ) + (power( INT, 31)-1));
-    printf("long            min: 0                long max: %lu\n", p2);
-    p = power( SHORT, 16 );
-    printf("short           min: 0               short max: %lu\n\n", p-1);
-    printf("Float & double datatypes:\n");
+    printf("\nFloat & double datatypes:\n\n");
     for (p3 = 1 ; isfinite(p3)==true;)
     {
         p32 = p3;
@@ -929,27 +925,23 @@ void ex2_1()
 void ex2_2()
 {
     printf("Some text about this programm...\n");
-    int lim = 1000;
-    char s[1000];
-    for (int x; x < 1000; x++) s[x] = 0;
-    int c = 1;
-    int i;
-    for ( i = 0 ; i < lim-1 ; ++i )
-    {
-        if ( ( c = getchar() ) != EOF )
-        {
-            s[i] = c;
-        }
+    const int lim = 10;
+    enum End { no, yes };
+    End isEnd = no;
+    char s[lim];
+    for (int x = 0; x < lim; x++) s[x] = 0;
+    int c, i = 0;
+    while ( isEnd != yes )
+        if ( ( c = getchar() ) != EOF && c != '\n' && i < lim-1)
+            s[i++] = c;
         else
-            break;
-    }
-    if ( c == 'n' )
-    {
+            isEnd = yes;
+    if ( c == '\n' ) {
         s[i] = c;
         ++i;
     }
     s[i] = '\0';
-    printf("%s", s);
+    printf("\nResult string, length = %d: %s\n", i, s);
 }
 
 int htoi(char s[])
@@ -1076,6 +1068,6 @@ void ex2_5()
 
 int main()
 {
-    ex1_20_21();
+    ex2_4();
     return(0);
 }
