@@ -997,7 +997,7 @@ void ex2_3()
     }
 }
 
-void squeeze(char s1[], char s2[])
+void squeeze(char s1[], char s2[], char s3[])
 {
     int a = 0;
     while ( s1[a] != '\0' )
@@ -1015,15 +1015,30 @@ void squeeze(char s1[], char s2[])
         }
         a++;
     }
+    a = 0;
+    int b = 0;
+    while ( s1[a] != '\0' )
+    {
+        if ( s1[a] == '_' )
+        {
+            a++;
+        }
+        else
+        {
+            s3[b++] = s1[a++];
+        }
+    }
 }
 
 void ex2_4()
 {
     char s1[] = "leteli ptisy daleko kakoy koshmar";
     char s2[] = "letet vsem ptisam ne legko";
-    printf("Original str:\n%s\n", s1);
-    squeeze(s1,s2);
-    printf("%s\n\n", s1);
+    char s3[1000];
+    for (int go = 0; go < 1000; go++) s3[go] = '\0';
+    printf("Original strs:\ns1 = %s\ns2 = %s\n\n", s1, s2);
+    squeeze(s1,s2, s3);
+    printf("Rsult: %s\n\n", s3);
 }
 
 int any( char s1[], char s2[])
@@ -1069,6 +1084,6 @@ void ex2_5()
 
 int main()
 {
-    ex2_3();
+    ex2_4();
     return(0);
 }
