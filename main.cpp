@@ -987,9 +987,10 @@ int htoi(char s[])
 void ex2_3()
 {
     int x = 0;
+    int lenght;
     printf("Demostration work function 'htoi' \n");
     char line[MAXLINE];
-    while ( getline(line, MAXLINE) != EOF )
+    while ( ( lenght = getline(line, MAXLINE) ) > 0 )
     {
         x = htoi(line);
         printf("%d\n", x);
@@ -1068,6 +1069,6 @@ void ex2_5()
 
 int main()
 {
-    ex2_4();
+    ex2_3();
     return(0);
 }
