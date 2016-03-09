@@ -953,6 +953,7 @@ int htoi(char s[])
     {
         if( s[i] == '0' && counter == 1 )
         {
+            counter++;
             ++i;
             if ( s[i] == 'x' || s[i] == 'X' )
             {
@@ -978,7 +979,6 @@ int htoi(char s[])
             c = 10 + c - 'A';
         }
         else break;
-        counter++;
         A = A*16 + c;
     }
     return A;
