@@ -946,36 +946,26 @@ void ex2_2()
 
 int htoi(char s[])
 {
-    int counter = 1;
-    int A;
-    A = 0;
-    for( int i = 0 ; s[i] != '\0' ; i++ )
-    {
-        if( s[i] == '0' && counter == 1 )
-        {
-            counter++;
-            ++i;
-            if ( s[i] == 'x' || s[i] == 'X' )
-            {
-                ++i;
-            }
+    int isPref = 0, i = 0, A = 0, c = 0;
+    if ( s[0] == '0' && ( s[1] == 'x' || s[1] == 'X')) {
+        isPref = 1;
+    }
+    for( i = 0 ; s[i] != '\0' ; i++ ) {
+        if (isPref == 1) {
+            i = 2;
+            isPref = 0;
         }
-        int c;
         c = s[i];
-        if ( c == '0' && counter > 1 )
-        {
+        if ( s[i] == '0' ) {
             c = 0;
         }
-        else if ( c >= '1' && c <= '9' )
-        {
+        else if ( c >= '1' && c <= '9' ) {
             c -= '0';
         }
-        else if ( c >= 'a' && c <= 'f' )
-        {
+        else if ( c >= 'a' && c <= 'f' ) {
             c = 10 + c -'a';
         }
-        else if ( c >= 'A' && c <= 'F' )
-        {
+        else if ( c >= 'A' && c <= 'F' ) {
             c = 10 + c - 'A';
         }
         else break;
@@ -997,36 +987,15 @@ void ex2_3()
     }
 }
 
-void squeeze(char s1[], char s2[], char s3[])
+void squeeze(char s1[], char s2[])
 {
-    int a = 0;
-    while ( s1[a] != '\0' )
-    {
-        int b = 0;
-        while ( s2[b] != '\0' )
-        {
-            if ( s1[a] == s2[b] )
-            {
-                s1[a] = '_';
-                b++;
-            }
-            else
-                b++;
+    int a, b , c;
+    for ( c = 0; s2[c] != '\0'; c++ ) {
+        for ( a = b = 0 ; s1[a] != '\0'; a++ ) {
+            if ( s2[c] != s1[a] )
+                s1[b++] = s1[a];
         }
-        a++;
-    }
-    a = 0;
-    int b = 0;
-    while ( s1[a] != '\0' )
-    {
-        if ( s1[a] == '_' )
-        {
-            a++;
-        }
-        else
-        {
-            s3[b++] = s1[a++];
-        }
+        s1[b] = '\0';
     }
 }
 
@@ -1034,27 +1003,19 @@ void ex2_4()
 {
     char s1[] = "leteli ptisy daleko kakoy koshmar";
     char s2[] = "letet vsem ptisam ne legko";
-    char s3[1000];
-    for (int go = 0; go < 1000; go++) s3[go] = '\0';
     printf("Original strs:\ns1 = %s\ns2 = %s\n\n", s1, s2);
-    squeeze(s1,s2, s3);
-    printf("Rsult: %s\n\n", s3);
+    squeeze(s1,s2);
+    printf("Rsult: %s\n\n", s1);
 }
 
 int any( char s1[], char s2[])
 {
-    int p = 0;
-    int a = 0;
-    int flagp = 0;
-    while ( s1[a] != '\0' )
-    {
-        int b = 0;
-        while ( s2[b] != '\0' )
-        {
-            if ( s1[a] == s2[b] )
-            {
-                if (flagp == 0)
-                {
+    int p = 0, a = 0, b = 0, flagp = 0;
+    while ( s1[a] != '\0' ) {
+        b = 0;
+        while ( s2[b] != '\0' ) {
+            if ( s1[a] == s2[b] ) {
+                if (flagp == 0) {
                     p = a;
                     p++;
                 }
@@ -1067,19 +1028,42 @@ int any( char s1[], char s2[])
         a++;
     }
     if ( p == 0 )
-    {
         p = -1;
-    }
     return p;
 }
 
 void ex2_5()
 {
     int p = 0;
-    char s1[] = "12345leteli ptisy daleko kakoy koshmar";
+    char s1[] = "123456deteli ptisy daleko kakoy koshmar";
     char s2[] = "letet vsem ptisam ne legko";
     p = any(s1,s2);
     printf("%d\n\n", p);
+}
+
+void ex2_6()
+{
+
+}
+
+void ex2_7()
+{
+
+}
+
+void ex2_8()
+{
+
+}
+
+void ex2_9()
+{
+
+}
+
+void ex2_10()
+{
+
 }
 
 int main()
