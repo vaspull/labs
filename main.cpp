@@ -944,6 +944,46 @@ void ex2_2()
     printf("\nResult string, length = %d: %s\n", i, s);
 }
 
+int is_digit(char c)
+{
+    int a = 0;
+    if ( c >= '1' && c <= '9' ) {
+        a = 1;
+    }
+    return a;
+}
+
+int is_alpha(char c)
+{
+    int a = 0;
+    if ( ( c >= 'a' && c <= 'z' ) || ( c >= 'A' && c <= 'Z' ) ) {
+        a = 1;
+    }
+    return a;
+}
+
+void small_to_big(char s[])
+{
+    int a, b;
+    for ( a = 0; s[a] != '\0'; a++){
+        b = s[a];
+        if ( b >= 'a' && b <= 'z' ) {
+            s[a] = b - 32;
+        }
+    }
+}
+
+void big_to_small(char s[])
+{
+    int a, b;
+    for ( a = 0; s[a] != '\0'; a++){
+        b = s[a];
+        if ( b >= 'A' && b <= 'Z' ) {
+            s[a] = b + 32;
+        }
+    }
+}
+
 int htoi(char s[])
 {
     int isPref = 0, i = 0, A = 0, c = 0;
@@ -1068,6 +1108,6 @@ void ex2_10()
 
 int main()
 {
-    ex2_4();
+    ex2_3();
     return(0);
 }
