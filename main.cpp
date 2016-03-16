@@ -1003,15 +1003,6 @@ int htoi(char s[])
             c -= '0';
         else if ( is_alpha(c) == 1 )
             c = 10 + c -'A';
-        //        else if ( c >= '1' && c <= '9' ) {
-        //            c -= '0';
-        //        }
-        //        else if ( c >= 'a' && c <= 'f' ) {
-        //            c = 10 + c -'a';
-        //        }
-        //        else if ( c >= 'A' && c <= 'F' ) {
-        //            c = 10 + c - 'A';
-        //        }
         else break;
         A = A*16 + c;
     }
@@ -1079,16 +1070,60 @@ int any( char s1[], char s2[])
 
 void ex2_5()
 {
+    printf("Some text about this f4ckin programm\n");
+    printf("123456789 - simple table character position\n");
     int p = 0;
     char s1[] = "123456deteli ptisy daleko kakoy koshmar";
     char s2[] = "letet vsem ptisam ne legko";
     p = any(s1,s2);
-    printf("%d\n\n", p);
+    printf("%s\n\nPosition find: %d\n\n",s1, p);
+}
+
+void dec_to_bin (unsigned dec)
+{
+    char digit = (dec % 2) ? '1' : '0';
+    unsigned next = dec / 2;
+    if (next) {
+        dec_to_bin (next);
+    }
+    printf("%c", digit);
+}
+
+unsigned int setbits(unsigned x, int p, int n, unsigned y)
+{
+    unsigned int a = 1, b = 0;
+    while ( n > 0 ) {
+        b = b | a;
+        a = a << 1;
+        n--;
+    }
+    a = b;
+    a = a << p;
+    a = ~a;
+    x = x & a;
+    b = b & y;
+    b = b << p;
+    x = x | b;
+    return x;
 }
 
 void ex2_6()
 {
-
+    printf("Programm modulation of bits\n\n");
+    unsigned x2;
+    unsigned x = 204;
+    int p = 3;
+    int n = 4;
+    unsigned y = 205;
+    printf("p == %d ; n == %d\n\n", p, n);
+    printf("BIN\t\t\tDEC\n\n");
+    dec_to_bin(x);
+    printf(" - X -\t\t%d\n", x);
+    dec_to_bin(y);
+    printf(" - Y -\t\t%d\n", y);
+    x2 = setbits(x,p,n,y);
+    dec_to_bin(x2);
+    printf(" - result -\t%d\n",x2);
 }
 
 void ex2_7()
@@ -1113,6 +1148,6 @@ void ex2_10()
 
 int main()
 {
-    ex2_3();
+    ex2_6();
     return(0);
 }
