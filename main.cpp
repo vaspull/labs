@@ -999,15 +999,19 @@ int htoi(char s[])
         if ( s[i] == '0' ) {
             c = 0;
         }
-        else if ( c >= '1' && c <= '9' ) {
+        else if ( is_digit(c) == 1 )
             c -= '0';
-        }
-        else if ( c >= 'a' && c <= 'f' ) {
-            c = 10 + c -'a';
-        }
-        else if ( c >= 'A' && c <= 'F' ) {
-            c = 10 + c - 'A';
-        }
+        else if ( is_alpha(c) == 1 )
+            c = 10 + c -'A';
+        //        else if ( c >= '1' && c <= '9' ) {
+        //            c -= '0';
+        //        }
+        //        else if ( c >= 'a' && c <= 'f' ) {
+        //            c = 10 + c -'a';
+        //        }
+        //        else if ( c >= 'A' && c <= 'F' ) {
+        //            c = 10 + c - 'A';
+        //        }
         else break;
         A = A*16 + c;
     }
@@ -1022,6 +1026,7 @@ void ex2_3()
     char line[MAXLINE];
     while ( ( lenght = getline(line, MAXLINE) ) > 0 )
     {
+        small_to_big(line);
         x = htoi(line);
         printf("%d\n", x);
     }
