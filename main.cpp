@@ -1079,7 +1079,7 @@ void ex2_5()
     printf("%s\n\nPosition find: %d\n\n",s1, p);
 }
 
-void dec_to_bin (unsigned dec)
+void dec_to_bin (unsigned dec) //---- spizjeno
 {
     char digit = (dec % 2) ? '1' : '0';
     unsigned next = dec / 2;
@@ -1087,6 +1087,26 @@ void dec_to_bin (unsigned dec)
         dec_to_bin (next);
     }
     printf("%c", digit);
+}
+
+void dec_bin (unsigned char dec, char bin2[]) //----myself realisation - MORE LINES - MORE POWER! MUA HA HA!
+{
+    char bin[64];
+    for (int i = 0; i < 64; i++) bin[i] = '\0';
+    for (int i = 0; i < 64; i++) bin2[i] = '\0';
+    int a = 0, b = 0;
+    while (dec >= 1) {
+        if (dec%2)
+            bin[a] = '1';
+        else
+            bin[a] = '0';
+        a++;
+        dec = dec/2;
+    }
+    a--;
+    while ( a >= 0 )
+        bin2[b++] = bin[a--];
+    bin2[b] = 0;
 }
 
 unsigned int setbits(unsigned x, int p, int n, unsigned y)
@@ -1109,6 +1129,7 @@ unsigned int setbits(unsigned x, int p, int n, unsigned y)
 
 void ex2_6()
 {
+    char bin[64];
     printf("Programm modulation of bits\n\n");
     unsigned x2;
     unsigned x = 204;
@@ -1117,37 +1138,118 @@ void ex2_6()
     unsigned y = 205;
     printf("p == %d ; n == %d\n\n", p, n);
     printf("BIN\t\t\tDEC\n\n");
-    dec_to_bin(x);
-    printf(" - X -\t\t%d\n", x);
-    dec_to_bin(y);
-    printf(" - Y -\t\t%d\n", y);
+    dec_bin(x, bin);
+    printf("%s - X -\t\t%d\n",bin, x);
+    dec_bin(y, bin);
+    printf("%s - Y -\t\t%d\n", bin, y);
     x2 = setbits(x,p,n,y);
-    dec_to_bin(x2);
-    printf(" - result -\t%d\n",x2);
+    dec_bin(x2, bin);
+    printf("%s - result -\t%d\n\n",bin, x2);
+}
+
+unsigned int invert(unsigned x,int p, int n)
+{
+    unsigned int a = 1, b = 0, y;
+    while (n > 0) {
+        b = b | a;
+        a = a << 1;
+        n--;
+    }
+    a = b;
+    b = b << p;
+    b = b & x;
+    b = b >> p;
+    b = ~b;
+    y = b;
+    b = a;
+    a = a << p;
+    a = ~a;
+    x = x & a;
+    b = b & y;
+    b = b << p;
+    x = x | b;
+    return x;
 }
 
 void ex2_7()
 {
+    printf("Programm modulation of bits\n\n");
+    char bin[64];
+    unsigned x2;
+    unsigned x = 204;
+    int p = 3;
+    int n = 4;
+    printf("p == %d ; n == %d\n\n", p, n);
+    printf("BIN\t\t\tDEC\n\n");
+    dec_bin(x, bin);
+    printf("%s - X -\t\t%d\n",bin, x);
+    x2 = invert(x,p,n);
+    dec_bin(x2, bin);
+    printf("%s - result -\t%d\n\n",bin, x2);
+}
 
+unsigned int rightrot( unsigned x, int n)
+{
+    while ( n > 0 ) {
+        x = x >> 1;
+        n--;
+    }
+    return x;
 }
 
 void ex2_8()
 {
+    printf("Programm modulation of bits\n\n");
+    char bin[64];
+    unsigned x2;
+    unsigned x = 204;
+    int n = 2;
+    printf("n == %d\n\n", n);
+    printf("BIN\t\t\tDEC\n\n");
+    dec_bin(x, bin);
+    printf("%s - X -\t\t%d\n",bin, x);
+    x2 = rightrot(x, n);
+    dec_bin(x2, bin);
+    printf("%s - result -\t%d\n\n",bin, x2);
+}
 
+int bitcount (unsigned x)
+{
+    int b;
+    for ( b = 0; x != 0; x &= ( x - 1 ) ) b++;
+    return b;
 }
 
 void ex2_9()
 {
+    printf("Count 1 bits in argument of function\n\n");
+    unsigned a = 204, b;
+    b = bitcount(a);
+    printf("%d - counter 1 bits in %d \n\n", b, a);
+}
 
+
+int lower(int c)
+{
+    c = ( c >= 'A' && c <= 'Z' ) ? c + 32:c;
+    return c;
 }
 
 void ex2_10()
 {
-
+    int a, c;
+    char b[] = "MAMA MYLA RAMY";
+    printf("%s - Ishodnaya stroka\n", b);
+    for(a = 0; b[a] != 0; a++ ) {
+        c = lower(b[a]);
+        printf("%c", c);
+    }
+    printf(" - result\n\n\n\n\n");
 }
+
 
 int main()
 {
-    ex2_6();
+    ex2_10();
     return(0);
 }
