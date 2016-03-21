@@ -946,30 +946,21 @@ void ex2_2()
 
 int is_digit(char c)
 {
-    int a = 0;
-    if ( c >= '1' && c <= '9' ) {
-        a = 1;
-    }
-    return a;
+    return ( c >= '0' && c <= '9' );
 }
 
 int is_alpha(char c)
 {
-    int a = 0;
-    if ( ( c >= 'a' && c <= 'z' ) || ( c >= 'A' && c <= 'Z' ) ) {
-        a = 1;
-    }
-    return a;
+    return ( ( c >= 'a' && c <= 'z' ) || ( c >= 'A' && c <= 'Z' ) );
 }
 
 void small_to_big(char s[])
 {
     int a, b;
-    for ( a = 0; s[a] != '\0'; a++){
+    for ( a = 0; s[a] != '\0'; a++ ) {
         b = s[a];
-        if ( b >= 'a' && b <= 'z' ) {
-            s[a] = b - 32;
-        }
+        if ( b >= 'a' && b <= 'z' )
+            s[a] = b - ('a' - 'A');
     }
 }
 
@@ -978,33 +969,36 @@ void big_to_small(char s[])
     int a, b;
     for ( a = 0; s[a] != '\0'; a++){
         b = s[a];
-        if ( b >= 'A' && b <= 'Z' ) {
-            s[a] = b + 32;
-        }
+        if ( b >= 'A' && b <= 'Z' )
+            s[a] = b + ('a' - 'A');
     }
+}
+
+char to_upper(char c)
+{
+    if (c >= 'a' && c <= 'z')
+        return c - ('a' - 'A');
+    else
+        return c;
+}
+
+char to_lower(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+        return c + ('a' - 'A');
+    else
+        return c;
 }
 
 int htoi(char s[])
 {
-    int isPref = 0, i = 0, A = 0, c = 0;
-    if ( s[0] == '0' && ( s[1] == 'x' || s[1] == 'X')) {
-        isPref = 1;
-    }
+    int i = 0, A = 0;
     for( i = 0 ; s[i] != '\0' ; i++ ) {
-        if (isPref == 1) {
-            i = 2;
-            isPref = 0;
-        }
-        c = s[i];
-        if ( s[i] == '0' ) {
-            c = 0;
-        }
-        else if ( is_digit(c) == 1 )
-            c -= '0';
-        else if ( is_alpha(c) == 1 )
-            c = 10 + c -'A';
-        else break;
-        A = A*16 + c;
+        char c = to_upper(s[i]);
+        if ( is_digit(c) )
+            A = A * 16 + (c - '0');
+        else if ( c >= 'A' && c <= 'F' )
+            A = A * 16 + (10 + c - 'A');
     }
     return A;
 }
@@ -1025,72 +1019,66 @@ void ex2_3()
 
 void squeeze(char s1[], char s2[])
 {
-    int a, b , c;
+    int a, b, c;
     for ( c = 0; s2[c] != '\0'; c++ ) {
-        for ( a = b = 0 ; s1[a] != '\0'; a++ ) {
+        for ( a = b = 0 ; s1[a] != '\0'; a++ )
             if ( s2[c] != s1[a] )
                 s1[b++] = s1[a];
-        }
         s1[b] = '\0';
     }
 }
 
 void ex2_4()
 {
-    char s1[] = "leteli ptisy daleko kakoy koshmar";
-    char s2[] = "letet vsem ptisam ne legko";
-    printf("Original strs:\ns1 = %s\ns2 = %s\n\n", s1, s2);
-    squeeze(s1,s2);
-    printf("Rsult: %s\n\n", s1);
+    char s1[] = "dcabcaddda";
+    char s2[] = "ddaa";
+    printf("Original strings:\ns1 = %s\ns2 = %s\n\n", s1, s2);
+    squeeze(s1, s2);
+    printf("Result: %s\n\n", s1);
 }
 
 int any( char s1[], char s2[])
 {
-    int p = 0, a = 0, b = 0, flagp = 0;
+    int a = 0, b = 0;
     while ( s1[a] != '\0' ) {
         b = 0;
         while ( s2[b] != '\0' ) {
-            if ( s1[a] == s2[b] ) {
-                if (flagp == 0) {
-                    p = a;
-                    p++;
-                }
-                b++;
-                flagp++;
-            }
-            else
-                b++;
+            if ( s1[a] == s2[b])
+                return (a + 1);
+            b++;
         }
         a++;
     }
-    if ( p == 0 )
-        p = -1;
-    return p;
+    return -1;
 }
 
 void ex2_5()
 {
-    printf("Some text about this f4ckin programm\n");
-    printf("123456789 - simple table character position\n");
-    int p = 0;
-    char s1[] = "123456deteli ptisy daleko kakoy koshmar";
-    char s2[] = "letet vsem ptisam ne legko";
-    p = any(s1,s2);
-    printf("%s\n\nPosition find: %d\n\n",s1, p);
+    printf("Testing function 'int any(char s1[], char s2[]);'\n");
+    printf("1234567890 - simple table character position.\n");
+    char s1[] = "abccde";
+    char s2[] = "edf";
+    printf("Source strings:\n%s\n%s\nPosition find at: %d\n",s1, s2, any(s1, s2));
 }
 
-void dec_to_bin (unsigned dec) //---- spizjeno
+void dec_to_bin (unsigned dec) //---- borrowed
 {
     char digit = (dec % 2) ? '1' : '0';
     unsigned next = dec / 2;
-    if (next) {
+    if (next)
         dec_to_bin (next);
-    }
     printf("%c", digit);
 }
 
-void dec_bin (unsigned char dec, char bin2[]) //----myself realisation - MORE LINES - MORE POWER! MUA HA HA!
+void dec_bin (unsigned char dec, char bin[]) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
 {
+    const int bitsPerByte = 8;
+    for (int i = bitsPerByte-1; i >= 0; i--) {
+        bin[i] = '0' + (dec & 0x01);
+        dec = dec >> 1;
+    }
+    bin[bitsPerByte] = '\0';
+/*
     char bin[64];
     for (int i = 0; i < 64; i++) bin[i] = '\0';
     for (int i = 0; i < 64; i++) bin2[i] = '\0';
@@ -1107,12 +1095,13 @@ void dec_bin (unsigned char dec, char bin2[]) //----myself realisation - MORE LI
     while ( a >= 0 )
         bin2[b++] = bin[a--];
     bin2[b] = 0;
+*/
 }
 
 unsigned int setbits(unsigned x, int p, int n, unsigned y)
 {
     unsigned int a = 1, b = 0;
-    while ( n > 0 ) {
+    while ( n > 0 ) {           // Prepare bit mask...
         b = b | a;
         a = a << 1;
         n--;
@@ -1130,27 +1119,23 @@ unsigned int setbits(unsigned x, int p, int n, unsigned y)
 void ex2_6()
 {
     char bin[64];
-    printf("Programm modulation of bits\n\n");
-    unsigned x2;
-    unsigned x = 204;
-    int p = 3;
-    int n = 4;
-    unsigned y = 205;
-    printf("p == %d ; n == %d\n\n", p, n);
-    printf("BIN\t\t\tDEC\n\n");
+    unsigned x = 0x0E, x2, y = 0xF0;
+    int p = 0, n = 2;
+    printf("Result of function 'unsigned int setbits(unsigned x, int p, int n, unsigned y);', where P = %d, N = %d.\n\n", p, n);
+    printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin);
-    printf("%s - X -\t\t%d\n",bin, x);
+    printf("X\t\t%s\t%d\n",bin, x);
     dec_bin(y, bin);
-    printf("%s - Y -\t\t%d\n", bin, y);
+    printf("Y\t\t%s\t%d\n", bin, y);
     x2 = setbits(x,p,n,y);
     dec_bin(x2, bin);
-    printf("%s - result -\t%d\n\n",bin, x2);
+    printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
 unsigned int invert(unsigned x,int p, int n)
 {
     unsigned int a = 1, b = 0, y;
-    while (n > 0) {
+    while (n > 0) {                 // bit mask
         b = b | a;
         a = a << 1;
         n--;
@@ -1173,19 +1158,16 @@ unsigned int invert(unsigned x,int p, int n)
 
 void ex2_7()
 {
-    printf("Programm modulation of bits\n\n");
     char bin[64];
-    unsigned x2;
-    unsigned x = 204;
-    int p = 3;
-    int n = 4;
-    printf("p == %d ; n == %d\n\n", p, n);
-    printf("BIN\t\t\tDEC\n\n");
+    unsigned x = 0xFF, x2;
+    int p = 7, n = 1;
+    printf("Result of function 'unsigned int invert(unsigned x, int p, int n);', where P = %d, N = %d.\n\n", p, n);
+    printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin);
-    printf("%s - X -\t\t%d\n",bin, x);
+    printf("X\t\t%s\t%d\n",bin, x);
     x2 = invert(x,p,n);
     dec_bin(x2, bin);
-    printf("%s - result -\t%d\n\n",bin, x2);
+    printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
 unsigned int rightrot( unsigned x, int n)
@@ -1199,57 +1181,68 @@ unsigned int rightrot( unsigned x, int n)
 
 void ex2_8()
 {
-    printf("Programm modulation of bits\n\n");
+
     char bin[64];
-    unsigned x2;
-    unsigned x = 204;
+    unsigned x = 0xFF, x2;
     int n = 2;
-    printf("n == %d\n\n", n);
-    printf("BIN\t\t\tDEC\n\n");
+    printf("Result of function 'unsigned int rightrot(unsigned x, int n);', where N = %d.\n\n", n);
+    printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin);
-    printf("%s - X -\t\t%d\n",bin, x);
+    printf("X\t\t%s\t%d\n",bin, x);
     x2 = rightrot(x, n);
     dec_bin(x2, bin);
-    printf("%s - result -\t%d\n\n",bin, x2);
+    printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
 int bitcount (unsigned x)
 {
     int b;
-    for ( b = 0; x != 0; x &= ( x - 1 ) ) b++;
+    for ( b = 0; x != 0; x &= ( x - 1 ) )
+        b++;
     return b;
 }
 
 void ex2_9()
 {
-    printf("Count 1 bits in argument of function\n\n");
-    unsigned a = 204, b;
+    printf("Count 1 bits in argument of function 'int bitcount(unsigned x);'.\n\n");
+    unsigned a = 0xEF, b;
+    char bin[64];
+    dec_bin(a, bin);
     b = bitcount(a);
-    printf("%d - counter 1 bits in %d \n\n", b, a);
+    printf("Result: %d, binary %s, 1 bits = %d.\n\n", a, bin, b);
 }
-
 
 int lower(int c)
 {
-    c = ( c >= 'A' && c <= 'Z' ) ? c + 32:c;
-    return c;
+    return (( c >= 'A' && c <= 'Z' ) ? c + ('a' - 'A') : c);
 }
 
 void ex2_10()
 {
     int a, c;
     char b[] = "MAMA MYLA RAMY";
-    printf("%s - Ishodnaya stroka\n", b);
+    printf("Testing function 'int lower(int c);'.\n%s - source string.\n", b);
     for(a = 0; b[a] != 0; a++ ) {
         c = lower(b[a]);
         printf("%c", c);
     }
-    printf(" - result\n\n\n\n\n");
+    printf(" - result string.\n");
+}
+
+char* function_1(int a, char s[])
+{
+    for (int i = 0; i < a; i++)
+        s[i] = 'a' + i;
+    s[a] = '\0';
+    return s;
 }
 
 
 int main()
 {
-    ex2_10();
-    return(0);
+//   ex2_10();
+
+   char string[16];
+   printf("Result of 'char* function_1(int a, char s[])': %s\n", function_1(7, string));
+   return(0);
 }
