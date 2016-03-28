@@ -1061,31 +1061,17 @@ void ex2_5()
     printf("Source strings:\n%s\n%s\nPosition find at: %d\n",s1, s2, any(s1, s2));
 }
 
-void dec_bin (unsigned char dec, char bin2[]) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
+
+void dec_bin (unsigned char dec, char bin[], int bits) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
 {
-/*    const int bitsPerByte = 8;
-    for (int i = bitsPerByte-1; i >= 0; i--) {
-        bin[i] = '0' + (dec & 0x01);
-        dec = dec >> 1;
-    }
-    bin[bitsPerByte] = '\0';
-*/
-    char bin[64];
-    for (int i = 0; i < 64; i++) bin[i] = '\0';
-    for (int i = 0; i < 64; i++) bin2[i] = '\0';
-    int a = 0, b = 0;
+    for (int i = 0; i <= bits; i++) bin[i] = '0';
     while (dec >= 1) {
         if (dec%2)
-            bin[a] = '1';
+            bin[bits--] = '1';
         else
-            bin[a] = '0';
-        a++;
+            bin[bits--] = '0';
         dec = dec/2;
     }
-    a--;
-    while ( a >= 0 )
-        bin2[b++] = bin[a--];
-    bin2[b] = 0;
 }
 
 unsigned int setbits(unsigned x, int p, int n, unsigned y)
@@ -1115,17 +1101,18 @@ unsigned int setbits(unsigned x, int p, int n, unsigned y)
 
 void ex2_6()
 {
-    char bin[64];
+    char bin[16];
+    for (int i = 0; i < 16; i++) bin[i] = '\0';
     unsigned x = 204, x2, y = 179;
-    int p = 6, n = 4;
+    int p = 6, n = 4, bits = 7;
     printf("Result of function 'unsigned int setbits(unsigned x, int p, int n, unsigned y);', where P = %d, N = %d.\n\n", p, n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
-    dec_bin(x, bin);
+    dec_bin(x, bin, bits);
     printf("X\t\t%s\t%d\n",bin, x);
-    dec_bin(y, bin);
+    dec_bin(y, bin, bits);
     printf("Y\t\t%s\t%d\n", bin, y);
     x2 = setbits(x,p,n,y);
-    dec_bin(x2, bin);
+    dec_bin(x2, bin, bits);
     printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
@@ -1162,15 +1149,16 @@ unsigned int invert(unsigned x,int p, int n)
 
 void ex2_7()
 {
-    char bin[64];
+    char bin[16];
+    for (int i = 0; i < 16; i++) bin[i] = '\0';
     unsigned x = 204, x2;
-    int p = 6, n = 4;
+    int p = 6, n = 4, bits = 7;
     printf("Result of function 'unsigned int invert(unsigned x, int p, int n);', where P = %d, N = %d.\n\n", p, n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
-    dec_bin(x, bin);
+    dec_bin(x, bin, bits);
     printf("X\t\t%s\t%d\n",bin, x);
     x2 = invert(x,p,n);
-    dec_bin(x2, bin);
+    dec_bin(x2, bin, bits);
     printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
@@ -1185,16 +1173,16 @@ unsigned int rightrot( unsigned x, int n)
 
 void ex2_8()
 {
-
-    char bin[64];
+    char bin[16];
+    for (int i = 0; i < 16; i++) bin[i] = '\0';
     unsigned x = 0xFF, x2;
-    int n = 2;
+    int n = 2, bits = 7;
     printf("Result of function 'unsigned int rightrot(unsigned x, int n);', where N = %d.\n\n", n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
-    dec_bin(x, bin);
+    dec_bin(x, bin, bits);
     printf("X\t\t%s\t%d\n",bin, x);
     x2 = rightrot(x, n);
-    dec_bin(x2, bin);
+    dec_bin(x2, bin, bits);
     printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
@@ -1210,8 +1198,9 @@ void ex2_9()
 {
     printf("Count 1 bits in argument of function 'int bitcount(unsigned x);'.\n\n");
     unsigned a = 0xEF, b;
-    char bin[64];
-    dec_bin(a, bin);
+    char bin[16];
+    for (int i = 0; i < 16; i++) bin[i] = '\0';
+    dec_bin(a, bin, 7);
     b = bitcount(a);
     printf("Result: %d, binary %s, 1 bits = %d.\n\n", a, bin, b);
 }
@@ -1244,10 +1233,10 @@ char* function_1(int a, char s[])
 
 int main()
 {
-//   ex2_10();
-//   char string[16];
-//   printf("Result of 'char* function_1(int a, char s[])': %s\n", function_1(7, string));
-//   return(0);
+    //   ex2_10();
+    //   char string[16];
+    //   printf("Result of 'char* function_1(int a, char s[])': %s\n", function_1(7, string));
+    //   return(0);
     ex2_7();
     return(0);
 }
