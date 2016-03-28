@@ -1062,9 +1062,11 @@ void ex2_5()
 }
 
 
-void dec_bin (unsigned char dec, char bin[], int bits) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
+void dec_bin (unsigned dec, char bin[], int bits) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
 {
     for (int i = 0; i <= bits; i++) bin[i] = '0';
+    int z = bits +1;
+    bin[z] = 0;
     while (dec >= 1) {
         if (dec%2)
             bin[bits--] = '1';
@@ -1162,12 +1164,20 @@ void ex2_7()
     printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
-unsigned int rightrot( unsigned x, int n)
+unsigned int rightrot( unsigned char x, int n)
 {
-    while ( n > 0 ) {
-        x = x >> 1;
+    unsigned int a = 1, b = 0;
+    int z = n;
+    while (n > 0) {                 // bit mask
+        b = b | a;
+        a = a << 1;
         n--;
     }
+    a = b;
+    b = x & b;
+    x = x >> z;
+    b = b << ( (sizeof(x)*8) - z );
+    x = x | b;
     return x;
 }
 
@@ -1175,8 +1185,8 @@ void ex2_8()
 {
     char bin[16];
     for (int i = 0; i < 16; i++) bin[i] = '\0';
-    unsigned x = 0xFF, x2;
-    int n = 2, bits = 7;
+    unsigned char x = 179, x2;
+    int n = 4, bits = 7;
     printf("Result of function 'unsigned int rightrot(unsigned x, int n);', where N = %d.\n\n", n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin, bits);
@@ -1233,10 +1243,6 @@ char* function_1(int a, char s[])
 
 int main()
 {
-    //   ex2_10();
-    //   char string[16];
-    //   printf("Result of 'char* function_1(int a, char s[])': %s\n", function_1(7, string));
-    //   return(0);
-    ex2_7();
+    ex2_8();
     return(0);
 }
