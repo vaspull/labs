@@ -1061,24 +1061,15 @@ void ex2_5()
     printf("Source strings:\n%s\n%s\nPosition find at: %d\n",s1, s2, any(s1, s2));
 }
 
-void dec_to_bin (unsigned dec) //---- borrowed
+void dec_bin (unsigned char dec, char bin2[]) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
 {
-    char digit = (dec % 2) ? '1' : '0';
-    unsigned next = dec / 2;
-    if (next)
-        dec_to_bin (next);
-    printf("%c", digit);
-}
-
-void dec_bin (unsigned char dec, char bin[]) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
-{
-    const int bitsPerByte = 8;
+/*    const int bitsPerByte = 8;
     for (int i = bitsPerByte-1; i >= 0; i--) {
         bin[i] = '0' + (dec & 0x01);
         dec = dec >> 1;
     }
     bin[bitsPerByte] = '\0';
-/*
+*/
     char bin[64];
     for (int i = 0; i < 64; i++) bin[i] = '\0';
     for (int i = 0; i < 64; i++) bin2[i] = '\0';
@@ -1095,23 +1086,29 @@ void dec_bin (unsigned char dec, char bin[]) //----myself realization - MORE LIN
     while ( a >= 0 )
         bin2[b++] = bin[a--];
     bin2[b] = 0;
-*/
 }
 
 unsigned int setbits(unsigned x, int p, int n, unsigned y)
 {
     unsigned int a = 1, b = 0;
+    int z = n;
     while ( n > 0 ) {           // Prepare bit mask...
         b = b | a;
         a = a << 1;
         n--;
     }
     a = b;
-    a = a << p;
+    z = ( p - z ) + 1;
+    if ( z < 0) {
+        printf("\nInvalid value, 'p' must be greater than 'n'\n");
+        getchar();
+        return (0);
+    }
+    a = a << z;
     a = ~a;
     x = x & a;
     b = b & y;
-    b = b << p;
+    b = b << z;
     x = x | b;
     return x;
 }
@@ -1119,8 +1116,8 @@ unsigned int setbits(unsigned x, int p, int n, unsigned y)
 void ex2_6()
 {
     char bin[64];
-    unsigned x = 0x0E, x2, y = 0xF0;
-    int p = 0, n = 2;
+    unsigned x = 204, x2, y = 179;
+    int p = 6, n = 4;
     printf("Result of function 'unsigned int setbits(unsigned x, int p, int n, unsigned y);', where P = %d, N = %d.\n\n", p, n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin);
@@ -1135,23 +1132,30 @@ void ex2_6()
 unsigned int invert(unsigned x,int p, int n)
 {
     unsigned int a = 1, b = 0, y;
+    int z = n;
     while (n > 0) {                 // bit mask
         b = b | a;
         a = a << 1;
         n--;
     }
     a = b;
-    b = b << p;
+    z = ( p - z ) + 1;
+    if ( z < 0) {
+        printf("\nInvalid value, 'p' must be greater than 'n'\n");
+        getchar();
+        return (0);
+    }
+    b = b << z;
     b = b & x;
-    b = b >> p;
+    b = b >> z;
     b = ~b;
     y = b;
     b = a;
-    a = a << p;
+    a = a << z;
     a = ~a;
     x = x & a;
     b = b & y;
-    b = b << p;
+    b = b << z;
     x = x | b;
     return x;
 }
@@ -1159,8 +1163,8 @@ unsigned int invert(unsigned x,int p, int n)
 void ex2_7()
 {
     char bin[64];
-    unsigned x = 0xFF, x2;
-    int p = 7, n = 1;
+    unsigned x = 204, x2;
+    int p = 6, n = 4;
     printf("Result of function 'unsigned int invert(unsigned x, int p, int n);', where P = %d, N = %d.\n\n", p, n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin);
@@ -1241,8 +1245,9 @@ char* function_1(int a, char s[])
 int main()
 {
 //   ex2_10();
-
-   char string[16];
-   printf("Result of 'char* function_1(int a, char s[])': %s\n", function_1(7, string));
-   return(0);
+//   char string[16];
+//   printf("Result of 'char* function_1(int a, char s[])': %s\n", function_1(7, string));
+//   return(0);
+    ex2_7();
+    return(0);
 }
