@@ -1062,17 +1062,16 @@ void ex2_5()
 }
 
 
-void dec_bin (unsigned dec, char bin[], int bits) //----myself realization - MORE LINES - MORE POWER! MUA HA HA!
+void dec_bin (unsigned dec, char bin[], int bits)
 {
-    for (int i = 0; i <= bits; i++) bin[i] = '0';
-    int z = bits +1;
-    bin[z] = 0;
-    while (dec >= 1) {
-        if (dec%2)
-            bin[bits--] = '1';
-        else
-            bin[bits--] = '0';
-        dec = dec/2;
+    if (bits <= 0)
+        return;
+    for (int i = 0; i < bits; i++)
+        bin[i] = '0';
+    bin[bits] = '\0';
+    while (dec && bits) {
+        bin[--bits] = '0' + (dec & 0x01);
+        dec >>= 1;
     }
 }
 
@@ -1088,8 +1087,7 @@ unsigned int setbits(unsigned x, int p, int n, unsigned y)
     a = b;
     z = ( p - z ) + 1;
     if ( z < 0) {
-        printf("\nInvalid value, 'p' must be greater than 'n'\n");
-        getchar();
+        printf("\nInvalid value, 'p' must be greater than 'n'.\n");
         return (0);
     }
     a = a << z;
@@ -1104,9 +1102,10 @@ unsigned int setbits(unsigned x, int p, int n, unsigned y)
 void ex2_6()
 {
     char bin[16];
-    for (int i = 0; i < 16; i++) bin[i] = '\0';
-    unsigned x = 204, x2, y = 179;
-    int p = 6, n = 4, bits = 7;
+    for (int i = 0; i < 16; i++)
+        bin[i] = '\0';
+    unsigned x = 205, x2, y = 179;
+    int p = 4, n = 6, bits = 8;
     printf("Result of function 'unsigned int setbits(unsigned x, int p, int n, unsigned y);', where P = %d, N = %d.\n\n", p, n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin, bits);
@@ -1131,7 +1130,6 @@ unsigned int invert(unsigned x,int p, int n)
     z = ( p - z ) + 1;
     if ( z < 0) {
         printf("\nInvalid value, 'p' must be greater than 'n'\n");
-        getchar();
         return (0);
     }
     b = b << z;
@@ -1154,7 +1152,7 @@ void ex2_7()
     char bin[16];
     for (int i = 0; i < 16; i++) bin[i] = '\0';
     unsigned x = 204, x2;
-    int p = 6, n = 4, bits = 7;
+    int p = 3, n = 8, bits = 8;
     printf("Result of function 'unsigned int invert(unsigned x, int p, int n);', where P = %d, N = %d.\n\n", p, n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin, bits);
@@ -1164,8 +1162,12 @@ void ex2_7()
     printf("Result:\t\t%s\t%d\n\n",bin, x2);
 }
 
-unsigned int rightrot( unsigned char x, int n)
+unsigned int rightrot( unsigned long x, int n)
 {
+    int bitsInChar = 1;
+    unsigned char c = 0x01;
+    while ( (c <<= 1) )
+        bitsInChar++;
     unsigned int a = 1, b = 0;
     int z = n;
     while (n > 0) {                 // bit mask
@@ -1176,17 +1178,20 @@ unsigned int rightrot( unsigned char x, int n)
     a = b;
     b = x & b;
     x = x >> z;
-    b = b << ( (sizeof(x)*8) - z );
+    b = b << ( bitsInChar - z );
     x = x | b;
     return x;
+    // More compact form.
+    // return (x >> n) | (x << (bitsInChar-n));
 }
 
 void ex2_8()
 {
     char bin[16];
-    for (int i = 0; i < 16; i++) bin[i] = '\0';
-    unsigned char x = 179, x2;
-    int n = 4, bits = 7;
+    for (int i = 0; i < 16; i++)
+        bin[i] = '\0';
+    unsigned char x = 0x0F, x2;
+    int n = 3, bits = 8;
     printf("Result of function 'unsigned int rightrot(unsigned x, int n);', where N = %d.\n\n", n);
     printf("Variable:\tBinary:\t\tDecimal:\n\n");
     dec_bin(x, bin, bits);
