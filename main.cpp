@@ -1265,7 +1265,7 @@ int binsearch(int x, int v[], int n) //original function
     return -1; /* совпадения нет */
 }
 
-int binsearch_new(int x, int v[], int n) //original function whith some changes
+int binsearch_new(int x, int v[], int n)            //original function whith some changes
 {
     int low, high;
     low = 0;
@@ -1281,7 +1281,7 @@ int binsearch_new(int x, int v[], int n) //original function whith some changes
     if ( x == v[mid])
         return mid;
     else
-        return(0);
+        return -1;
 }
 
 int bsearch(int x, int v[], int n) //my function
@@ -1297,18 +1297,21 @@ int bsearch(int x, int v[], int n) //my function
 
 void ex3_1()
 {
-    printf("binsearch: find 'x' in 'v[]'\n");
-    int v[20];
-    int count = 1, i, x = 22, n, g;
-    for (i = 0; i <= 20; i++) v[i] = i + count;
+    printf("Binsearch: find 'x' in 'v[]'.\n");
+    const int sizeV = 20;
+    int v[sizeV];
+    int count = 1, i, x = 10, n, g;
+    for (i = 0; i <= sizeV; i++)
+        v[i] = i + count;
     printf("x = %d\n", x);
     printf("v[]= ");
-    for (int qaz = 0; qaz <= 20; qaz++) printf("%d ", v[qaz]);
+    for (int qaz = 0; qaz <= sizeV; qaz++)
+        printf("%d ", v[qaz]);
     printf("\n");
     for (n = 0; v[n] != '\0'; n++);
-    g = binsearch_new(x, v, 20);
-    if ( g == 0)
-        printf("No match find\n");
+    g = binsearch_new(x, v, sizeV);
+    if ( g == -1 )
+        printf("No match founded.\n");
     else
         printf("Position x in v[] = %d\n", g);
 }
