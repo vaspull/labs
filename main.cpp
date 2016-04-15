@@ -1248,23 +1248,6 @@ char* function_1(int a, char s[])
 
 //<--------------Chapter 3--------------------->//
 
-int binsearch(int x, int v[], int n) //original function
-{
-    int low, high, mid;
-    low = 0;
-    high = n - 1 ;
-    while (low <= high) {
-        mid = (low + high) / 2;
-        if (x < v[mid])
-            high = mid - 1;
-        else if (x > v[mid])
-            low = mid + 1 ;
-        else /* совпадение найдено */
-            return mid;
-    }
-    return -1; /* совпадения нет */
-}
-
 int binsearch_new(int x, int v[], int n)            //original function whith some changes
 {
     int low, high;
@@ -1282,17 +1265,6 @@ int binsearch_new(int x, int v[], int n)            //original function whith so
         return mid;
     else
         return -1;
-}
-
-int bsearch(int x, int v[], int n) //my function
-{
-    while ( n >= 0 ) {
-        if ( x != v[n] )
-            n--;
-        else
-            return n;
-    }
-    return(0);
 }
 
 void ex3_1()
@@ -1316,9 +1288,49 @@ void ex3_1()
         printf("Position x in v[] = %d\n", g);
 }
 
+void escape(char s[], char t[])
+{
+    for ( int i = 0, a = 0; t[i] != '\0'; i++) {
+        switch(t[i]) {
+        case '\t':
+            s[a++] = '\\';
+            s[a++] = 't';
+            break;
+        case '\n':
+            s[a++] = '\\';
+            s[a++] = 'n';
+            break;
+        default:
+            s[a++] = t[i];
+            break;
+        }
+    }
+}
+
+void ex3_2()
+{
+    printf("Convert escapes to the visual symbols\n\n");
+    char t[] = "mama \t myla \t ramy\n";
+    char s[3000];
+    for (int i = 0; i < 3000; i++) s[i] = '\0';
+    printf("Source str: %s", t);
+    escape(s, t);
+    printf("Result str: %s\n\n", s);
+}
+
+void expand(char s1[], char s2[])
+{
+
+}
+
+void ex3_3()
+{
+    printf("Some text....\n");
+}
+
 int main()
 {
-    ex3_1();
+    ex3_3();
     return(0);
 }
 
