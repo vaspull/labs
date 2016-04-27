@@ -1307,15 +1307,46 @@ void escape(char s[], char t[])
     }
 }
 
+void anti_escape(char s[], char t[])
+{
+    for ( int i = 0, a = 0, b = 0; t[i] != '\0'; i++) {
+        switch(t[i]) {
+        case '\\':
+            b = i + 1;
+            switch(t[b]) {
+            case 'n':
+                s[a++] = '\n';
+                i += 2;
+                break;
+            case 't':
+                s[a++] = '\t';
+                i += 2;
+                break;
+            default:
+                s[a++] = t[i];
+                break;
+            }
+        default:
+            s[a++] = t[i];
+            break;
+        }
+    }
+}
+
 void ex3_2()
 {
     printf("Convert escapes to the visual symbols\n\n");
     char t[] = "mama \t myla \t ramy\n";
     char s[3000];
+    char s2[3000];
     for (int i = 0; i < 3000; i++) s[i] = '\0';
+    for (int i = 0; i < 3000; i++) s2[i] = '\0';
     printf("Source str: %s", t);
     escape(s, t);
-    printf("Result str: %s\n\n", s);
+    printf("Result str: %s\n\n\n", s);
+    printf("Source str: %s\n", s);
+    anti_escape(s2, s);
+    printf("Result str: %s\n\n\n", s2);
 }
 
 void expand(char s1[], char s2[])
@@ -1330,7 +1361,7 @@ void ex3_3()
 
 int main()
 {
-    ex3_3();
+    ex3_2();
     return(0);
 }
 
