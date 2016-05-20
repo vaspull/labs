@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
+#include <ctype.h>
 
 #define MAXLINE 3000
 
@@ -1316,16 +1317,17 @@ void anti_escape(char s[], char t[])
             switch(t[b]) {
             case 'n':
                 s[a++] = '\n';
-                i += 2;
+                i += 1;
                 break;
             case 't':
                 s[a++] = '\t';
-                i += 2;
+                i += 1;
                 break;
             default:
                 s[a++] = t[i];
                 break;
             }
+            break;
         default:
             s[a++] = t[i];
             break;
@@ -1336,7 +1338,7 @@ void anti_escape(char s[], char t[])
 void ex3_2()
 {
     printf("Convert escapes to the visual symbols\n\n");
-    char t[] = "mama \t myla \t ramy\n";
+    char t[] = "mama \t myla \t\t ramy\n";
     char s[3000];
     char s2[3000];
     for (int i = 0; i < 3000; i++) s[i] = '\0';
@@ -1349,45 +1351,33 @@ void ex3_2()
     printf("Result str: %s\n\n\n", s2);
 }
 
+
 void expand(char s1[], char s2[])
 {
-
+    int i, b = 0, c = 0;
+    for ( i = 0; s1[i] != '\0'; i++ )
+        if ( s1[i] == '-' ) {
+            if ( i == 0 || s1[i+1] == '\0' )
+                s2[c++] = '-';
+            else
+                for (b = s1[i-1]; b <= s1[i+1]; b++)
+                    s2[c++] = b;
+        }
+    s2[c] = '\0';
 }
 
 void ex3_3()
 {
-    printf("Some text....\n");
+    printf("Demonstration func expand\n\n");
+    char s1[] = "-A-z1-9-";
+    char s2[12000];
+    for (int i = 0; i < 12000; i++) s2[i] = '\0';
+    expand(s1, s2);
+    printf("Sourse: %s\nResult: %s\n\n", s1, s2);
 }
 
 int main()
 {
-    ex3_2();
+    ex3_3();
     return(0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
