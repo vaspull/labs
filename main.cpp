@@ -10,7 +10,7 @@ void ex1_1()
 {
     printf("Hello, World!\n");
 }
-//
+
 void ex1_2()
 {
     printf("Hello, World!\a\n");
@@ -573,106 +573,51 @@ void ex1_22()
 
 void ex1_23()
 {
-    printf("It displays the contents of the file C program without comments\n\n");
-    int flagSLASH = 0;
-    int flagSTAR = 0;
-    int flagSTAR2 = 0;
-    int flagSLASH2 = 0;
-    int flagKAVICHKA = 0;
-    int flagKAVICHKA2 = 0;
-    int c;
-    const char *fname = "main.cpp";
-    FILE* file = fopen(fname, "r");
-    if(file == NULL)
-    {
-        printf("File '%s' does not exist.\n", fname);
+    printf("Content of the file main.cpp without comments, file must compile correctly.\n");
+    FILE* main = fopen("main.cpp", "r");
+    if (!main) {
+        printf("File main.cpp does not exist. Check paths.\n");
         return;
     }
-    while ( ( c = getc(file) ) != EOF )
-    {
-        if ( c == 39 && flagSLASH == 0 && flagSTAR == 0 )
-        {
-            if ( flagKAVICHKA2 == 1)
-            {
-                flagKAVICHKA2 = 0;
+    int c, isString = 0, isSingleLine = 0, isManyLines = 0;
+    while ( (c = getc(main)) != EOF) {
+        if ( !isSingleLine && !isManyLines ) {
+            if ( c == '\\' ) {
                 printf("%c", c);
+                c = getc(main);
+            } else {
+                if ( !isString && ( c == '\'' || c == '"'))
+                    isString = c;
+                else
+                    if ( isString == c )
+                        isString = 0;
+                if ( !isString ) {
+                    if ( c == '/' ) {
+                        c = getc(main);
+                        if ( c == '*' )
+                            isManyLines = 1;
+                        else if ( c == '/' )
+                            isSingleLine = 1;
+                        else
+                            printf("/");
+                    }
+                }
             }
-            else
-            {
-                flagKAVICHKA2 = 1;
+            if ( !isSingleLine && !isManyLines )
                 printf("%c", c);
+        } else {
+            if ( isSingleLine && c == '\n' ) {
+                printf("\n");
+                isSingleLine = 0;
             }
-        }
-        else if ( c == '"' && flagSLASH == 0 && flagSTAR == 0 && flagKAVICHKA2 == 0 )
-        {
-            if ( flagKAVICHKA == 1)
-            {
-                flagKAVICHKA = 0;
-                printf("%c", c);
+            if ( isManyLines && c == '*') {
+                c = getc(main);
+                if ( c == '/' )
+                    isManyLines = 0;
             }
-            else
-            {
-                flagKAVICHKA = 1;
-                printf("%c", c);
-            }
-        }
-        else if ( c == '/' && flagKAVICHKA == 0 && flagKAVICHKA2 == 0 )
-        {
-            if (flagSTAR2 == 1)
-            {
-                flagSTAR = 0;
-                flagSTAR2 = 0;
-                flagSLASH = 0;
-                flagSLASH2 = 0;
-            }
-            else if ( flagSLASH == 0 )
-            {
-                flagSLASH = 1;
-            }
-            else if ( flagSLASH == 1 )
-            {
-                flagSLASH2 = 1;
-            }
-        }
-        else if ( c == '*' )
-        {
-            if ( flagSLASH == 1 && flagSTAR == 0 )
-            {
-                flagSTAR = 1;
-                flagSLASH2 = 1;
-            }
-            else if ( flagSTAR == 1 )
-            {
-                flagSTAR2 = 1;
-            }
-            else
-            {
-                printf("%c", c);
-            }
-        }
-        else if ( c == '\n' )
-        {
-            flagSLASH = 0;
-            printf("%c", c);
-        }
-        else if ( flagSLASH == 1 && flagSLASH2 == 0)
-        {
-            flagSLASH = 0;
-            printf("/ %c", c);
-        }
-        else if ( flagSLASH == 0 && flagSTAR == 0 )
-        {
-            flagSLASH2 = 0;
-            flagSTAR = 0;
-            flagSTAR2 = 0;
-            printf("%c", c);
-        }
-        else if (flagSTAR2 == 1)
-        {
-            flagSTAR2 = 0;
         }
     }
-    fclose(file);
+    fclose(main);
 }
 
 int readFile(FILE *fPtr, char line[])
@@ -1373,11 +1318,21 @@ void ex3_3()
     char s2[12000];
     for (int i = 0; i < 12000; i++) s2[i] = '\0';
     expand(s1, s2);
-    printf("Sourse: %s\nResult: %s\n\n", s1, s2);
+    printf("Sourse:  %s\nResult: %s\n\n", s1, s2);
 }
 
 int main()
 {
-    ex3_3();
+    ex1_23();
+    // Next lines used for testing task 1.23. Remove later.
+    char r = '\''; /**/
+    /**/char s = '/';
+    const char s1[] = "Comment \" in str/ing /* not comment */, after chars // not comment too...";
+    int a;          // Comment with string and literal char c = 'r'; /* trying many lines*/
+    /* a = 0;       // Comment with many lines. And string "text". Literal ''.
+     *              /* Open comment, but not actual.
+     * */   a = 1;  // In the same line.
+    char c = '\"';   /**/// Constant char with all comments.
+    c = 'a';
     return(0);
 }
