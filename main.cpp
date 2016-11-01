@@ -571,7 +571,7 @@ void ex1_22()
     }
 }
 
-void ex1_23()
+void ex1_23_24()
 {
     printf("Content of the file main.cpp without comments, file must compile correctly.\n");
     FILE* main = fopen("main.cpp", "r");
@@ -580,6 +580,8 @@ void ex1_23()
         return;
     }
     int c, isString = 0, isSingleLine = 0, isManyLines = 0;
+    const char brackets[] = "()[]{}";
+    int bracketCounters[] = { 0, 0, 0, 0, 0, 0 };
     while ( (c = getc(main)) != EOF) {
         if ( !isSingleLine && !isManyLines ) {
             if ( c == '\\' ) {
@@ -603,8 +605,14 @@ void ex1_23()
                     }
                 }
             }
-            if ( !isSingleLine && !isManyLines )
+            if ( !isSingleLine && !isManyLines ) {
                 printf("%c", c);
+                int i = 0;
+                while (brackets[i] != '\0' && brackets[i] != c)
+                    i++;
+                if ( c == brackets[i] )
+                    bracketCounters[i]++;
+            }
         } else {
             if ( isSingleLine && c == '\n' ) {
                 printf("\n");
@@ -617,6 +625,10 @@ void ex1_23()
             }
         }
     }
+    printf("\nAll brackets in source file main.cpp: ");
+    for (int i = 0; i < 6; i++)
+        printf("'%c':%i ", brackets[i], bracketCounters[i]);
+    printf("\n");
     fclose(main);
 }
 
@@ -656,150 +668,6 @@ void somefunction()
     printf("%d lines in file '%s'\n", line_counter, fname);
     fclose(file);
 }
-
-void ex1_24()
-{
-    printf("Some text about this fucking programm \n\n");
-    int flagSLASH = 0;
-    int flagSTAR = 0;
-    int flagSTAR2 = 0;
-    int flagSLASH2 = 0;
-    int flagKAVICHKA = 0;
-    int flagKAVICHKA2 = 0;
-    int counter_Skobka_Kvadrat, counter_Skobka_krug, counter_Skobka_figura;
-    int counter_Skobka_Kvadrat2, counter_Skobka_krug2, counter_Skobka_figura2;
-    counter_Skobka_Kvadrat = counter_Skobka_krug = counter_Skobka_figura = 0;
-    counter_Skobka_Kvadrat2 = counter_Skobka_krug2 = counter_Skobka_figura2 = 0;
-    int c;
-    const char *fname = "main.cpp";
-    FILE* file = fopen(fname, "r");
-    if(file == NULL)
-    {
-        printf("File '%s' does not exist.\n", fname);
-        return;
-    }
-    while ( ( c = getc(file) ) != EOF )
-    {
-        if ( c == 39 && flagSLASH == 0 && flagSTAR == 0 )
-        {
-            if ( flagKAVICHKA2 == 1)
-            {
-                flagKAVICHKA2 = 0;
-            }
-            else
-            {
-                flagKAVICHKA2 = 1;
-            }
-        }
-        else if ( c == 34 && flagSLASH == 0 && flagSTAR == 0 && flagKAVICHKA2 == 0 )
-        {
-            if ( flagKAVICHKA == 1)
-            {
-                flagKAVICHKA = 0;
-            }
-            else
-            {
-                flagKAVICHKA = 1;
-            }
-        }
-        else if ( c == 47 && flagKAVICHKA == 0 && flagKAVICHKA2 == 0 )
-        {
-            if (flagSTAR2 == 1)
-            {
-                flagSTAR = 0;
-                flagSTAR2 = 0;
-                flagSLASH = 0;
-                flagSLASH2 = 0;
-            }
-            else if ( flagSLASH == 0 )
-            {
-                flagSLASH = 1;
-            }
-            else if ( flagSLASH == 1 )
-            {
-                flagSLASH2 = 1;
-            }
-        }
-        else if ( c == 42 )
-        {
-            if ( flagSLASH == 1 && flagSTAR == 0 )
-            {
-                flagSTAR = 1;
-                flagSLASH2 = 1;
-            }
-            else if ( flagSTAR == 1 )
-            {
-                flagSTAR2 = 1;
-            }
-            else
-            {
-
-            }
-        }
-        else if ( c == '\n' )
-        {
-            flagSLASH = 0;
-        }
-        else if ( c == 40 && flagKAVICHKA == 0 && flagSLASH2 == 0 )
-        {
-            counter_Skobka_krug++;
-        }
-        else if ( c == 41 && flagKAVICHKA == 0 && flagSLASH2 == 0 )
-        {
-            counter_Skobka_krug2++;
-        }
-        else if ( c == 91 && flagKAVICHKA == 0 && flagSLASH2 == 0 )
-        {
-            counter_Skobka_Kvadrat++;
-        }
-        else if ( c == 93 && flagKAVICHKA == 0 && flagSLASH2 == 0 )
-        {
-            counter_Skobka_Kvadrat2++;
-        }
-        else if ( c == 123 && flagKAVICHKA == 0 && flagSLASH2 == 0 )
-        {
-            counter_Skobka_figura++;
-        }
-        else if ( c == 125 && flagKAVICHKA == 0 && flagSLASH2 == 0 )
-        {
-            counter_Skobka_figura2++;
-        }
-        else if ( flagSLASH == 1 && flagSLASH2 == 0)
-        {
-            flagSLASH = 0;
-        }
-        else if ( flagSLASH == 0 && flagSTAR == 0 )
-        {
-            flagSLASH2 = 0;
-            flagSTAR = 0;
-            flagSTAR2 = 0;
-        }
-        else if (flagSTAR2 == 1)
-        {
-            flagSTAR2 = 0;
-        }
-    }
-    fclose(file);
-    printf("In file '%s':\n\n", fname);
-    if (counter_Skobka_krug != counter_Skobka_krug2)
-    {
-        printf("%d parentheses, the parentheses are not closed!!!\n", counter_Skobka_krug+counter_Skobka_krug2);
-    }
-    else printf("%d parentheses, the parentheses are closed.\n", counter_Skobka_krug+counter_Skobka_krug2);
-
-    if (counter_Skobka_Kvadrat != counter_Skobka_Kvadrat2)
-    {
-        printf("%d square brackets, the brackets are not closed!!!\n", counter_Skobka_Kvadrat+counter_Skobka_Kvadrat2);
-    }
-    else printf("%d square brackets, the brackets are closed.\n", counter_Skobka_Kvadrat+counter_Skobka_Kvadrat2);
-
-    if (counter_Skobka_figura != counter_Skobka_figura2)
-    {
-        printf("%d braces, braces are not closed!!!\n\n", counter_Skobka_figura+counter_Skobka_figura2);
-    }
-    else printf("%d braces, braces are closed.\n\n\n\n\n", counter_Skobka_figura+counter_Skobka_figura2);
-}
-
 
 //<--------------Chapter 2--------------------->//
 
@@ -1191,7 +1059,6 @@ char* function_1(int a, char s[])
     return s;
 }
 
-
 //<--------------Chapter 3--------------------->//
 
 int binsearch_new(int x, int v[], int n)            //original function whith some changes
@@ -1296,7 +1163,6 @@ void ex3_2()
     printf("Result str: %s\n\n\n", s2);
 }
 
-
 void expand(char s1[], char s2[])
 {
     int i, b = 0, c = 0;
@@ -1323,7 +1189,7 @@ void ex3_3()
 
 int main()
 {
-    ex1_23();
+    ex1_23_24();
     // Next lines used for testing task 1.23. Remove later.
     char r = '\''; /**/
     /**/char s = '/';
