@@ -574,19 +574,19 @@ void ex1_22()
 void ex1_23_24()
 {
     printf("Content of the file main.cpp without comments, file must compile correctly.\n");
-    FILE* main = fopen("main.cpp", "r");
-    if (!main) {
-        printf("File main.cpp does not exist. Check paths.\n");
+    FILE* source = fopen("main.c", "r");
+    if (!source) {
+        printf("File main.c does not exist. Check paths.\n");
         return;
     }
     int c, isString = 0, isSingleLine = 0, isManyLines = 0;
     const char brackets[] = "()[]{}";
     int bracketCounters[] = { 0, 0, 0, 0, 0, 0 };
-    while ( (c = getc(main)) != EOF) {
+    while ( (c = getc(source)) != EOF) {
         if ( !isSingleLine && !isManyLines ) {
             if ( c == '\\' ) {
                 printf("%c", c);
-                c = getc(main);
+                c = getc(source);
             } else {
                 if ( !isString && ( c == '\'' || c == '"'))
                     isString = c;
@@ -595,7 +595,7 @@ void ex1_23_24()
                         isString = 0;
                 if ( !isString ) {
                     if ( c == '/' ) {
-                        c = getc(main);
+                        c = getc(source);
                         if ( c == '*' )
                             isManyLines = 1;
                         else if ( c == '/' )
@@ -619,7 +619,7 @@ void ex1_23_24()
                 isSingleLine = 0;
             }
             if ( isManyLines && c == '*') {
-                c = getc(main);
+                c = getc(source);
                 if ( c == '/' )
                     isManyLines = 0;
             }
@@ -629,7 +629,17 @@ void ex1_23_24()
     for (int i = 0; i < 6; i++)
         printf("'%c':%i ", brackets[i], bracketCounters[i]);
     printf("\n");
-    fclose(main);
+    fclose(source);
+    // Next lines used only for testing task 1.23-24.
+    char r = '\''; /**/
+    /**/char s = '/';
+    const char s1[] = "Comment \" in str/ing /* not comment */, after chars // not comment too...";
+    int a;          // Comment with string and literal char c = 'r'; /* trying many lines*/
+    /* a = 0;       // Comment with many lines. And string "text". Literal ''.
+     *              /* Open comment, but not actual.
+     * */   a = 1;  // In the same line.
+    char c1 = '\"';   /**/// Constant char with all comments.
+    c1 = 'a';
 }
 
 int readFile(FILE *fPtr, char line[])
@@ -722,13 +732,13 @@ void ex2_1()
     double p4;
     double p42;
     printf("\nFloat & double datatypes:\n\n");
-    for (p3 = 1 ; isfinite(p3)==true;)
+    for (p3 = 1 ; isfinite(p3) != 0; )
     {
         p32 = p3;
         p3 *= 1.01;
     };
     printf("float max: %e\n", p32);
-    for ( p4 = 1 ; isfinite(p4) == true;)
+    for ( p4 = 1 ; isfinite(p4) != 0;)
     {
         p42 = p4;
         p4*=1.01;
@@ -741,7 +751,7 @@ void ex2_2()
     printf("Some text about this programm...\n");
     const int lim = 10;
     enum End { no, yes };
-    End isEnd = no;
+    int isEnd = no;
     char s[lim];
     for (int x = 0; x < lim; x++) s[x] = 0;
     int c, i = 0;
@@ -1165,40 +1175,30 @@ void ex3_2()
 
 void expand(char s1[], char s2[])
 {
-    int i, b = 0, c = 0;
-    for ( i = 0; s1[i] != '\0'; i++ )
-        if ( s1[i] == '-' ) {
-            if ( i == 0 || s1[i+1] == '\0' )
-                s2[c++] = '-';
-            else
-                for (b = s1[i-1]; b <= s1[i+1]; b++)
-                    s2[c++] = b;
-        }
-    s2[c] = '\0';
+    int j = 0;
+    for (int i = 0; s1[i] != '\0'; i++) {
+        char c = s1[i], c1 = s1[i + 1], c2 = (s1[i+1] != '\0') ? s1[i+2] : '\0';
+        if ((c1 == '-') &&  (c2 >= c) && ((isalpha(c) && isalpha(c2)) || (isdigit(c) && isdigit(c2)))) {
+            c1 = c;
+            while (c < c2)
+                s2[j++] = s1[i] + (c++ - c1);
+            ++i;
+        } else
+            s2[j++] = s1[i];
+    }
+    s2[j] = '\0';
 }
 
 void ex3_3()
 {
-    printf("Demonstration func expand\n\n");
-    char s1[] = "-A-z1-9-";
-    char s2[12000];
-    for (int i = 0; i < 12000; i++) s2[i] = '\0';
+    char s1[] = "-- a-d f-a A-D b-b a-c-e-f -pre post- -both- 1-3 1-3-5 --", s2[0x100];
+    printf("Expanding string '%s'.\n", s1);
     expand(s1, s2);
-    printf("Sourse:  %s\nResult: %s\n\n", s1, s2);
+    printf("Expanded string '%s'.\n", s2);
 }
 
 int main()
 {
-    ex1_23_24();
-    // Next lines used for testing task 1.23. Remove later.
-    char r = '\''; /**/
-    /**/char s = '/';
-    const char s1[] = "Comment \" in str/ing /* not comment */, after chars // not comment too...";
-    int a;          // Comment with string and literal char c = 'r'; /* trying many lines*/
-    /* a = 0;       // Comment with many lines. And string "text". Literal ''.
-     *              /* Open comment, but not actual.
-     * */   a = 1;  // In the same line.
-    char c = '\"';   /**/// Constant char with all comments.
-    c = 'a';
-    return(0);
+    ex3_3();
+    return 0;
 }
