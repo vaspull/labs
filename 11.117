@@ -30,8 +30,8 @@ int main()
         else if (arr[i] == min && first_minimum_found) count_last = i+1;
     }
 
-    printf("\n%d %d ", min, count_first);
-    if (count_last > -1) printf("%d", count_last);
+    printf("\nMinimum value:%d \nFirst posotion %d ", min, count_first);
+    if (count_last > -1) printf("\nLast position %d", count_last);
 
     return 0;
 }
